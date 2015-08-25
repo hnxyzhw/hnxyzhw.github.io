@@ -1,2 +1,2 @@
 # hnxyzhw.github.io
-hnxyzhw的博客
+hnxyzhw
