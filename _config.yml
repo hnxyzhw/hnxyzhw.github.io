@@ -1,0 +1,49 @@
+# Basic
+title: Allen Woody
+subtitle: 不要上来就说:给个代码吧!你应该想想为什么。
+welcome_message: <a href="https://www.jianshu.com/users/ec2765510404/latest_articles" target="_blank">我在简书上创建的有关于iOS开发的技术专辑，欢迎各位前来了解！</a>
+description: 嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。
+creator: <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a>
+
+url: "https://hnxyzhw.github.io"
+
+permalink: /:year/:month/:title/
+
+# Format
+highlighter: plain
+
+# supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
+cover_color: 
+
+# The blog button should not be removed.
+blog_button:
+    title: 博客列表
+    description: hnxyzhw blog
+
+# Navigation buttons in the front page.
+nav:
+    - {title: Github项目, description: My Projects, url: 'https://github.com/hnxyzhw'}
+    # - {title: Another Button, description: A button, url: 'http://example.com'}
+
+# Pagination
+gems: [jekyll-paginate]
+paginate: 10
+paginate_path: "page/:num/"
+
+# Comment
+comment:
+    disqus: vno-jekyll
+    # duoshuo:
+
+# Social
+social:
+    weibo: 1823801224
+    github: hnxyzhw
+    twitter: hnxyzhw
+    gplus: hnxyzhw@gmail.com
+    mail: hnxyzhw611@126.com
+
+# Google Analytics
+ga:
+    # id: your_ga_id
+    # host: your_host
