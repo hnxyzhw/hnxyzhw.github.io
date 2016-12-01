@@ -1,3 +1,8 @@
+---
+layout: post
+title: iOS中NSString的strong、copy的使用
+date: 2016-08-30 16:15:34.000000000 +09:00
+---
 &#160; &#160; &#160; &#160;iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：
 ****
 ![ARC/MRC.png](http://upload-images.jianshu.io/upload_images/683658-f796e399a5cc4ca9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -97,3 +102,5 @@ iOSCopyAndStrong[1076:1312388] the copy string:0xa00000000534f693, 0x7fb0a2c5505
 &#160; &#160; &#160; &#160;当原字符串是NSMutableString类型时，strong特性对象只是增加了原字符串的引用计数，但是copy特性对象则是对原字符串进行了深拷贝，创建了一个新对象，并且指向了这个新对象。此时，copy特性对象是NSString类型的不可变的,strong特性对象是NSMutableString类型的可变的。
 
 &#160; &#160; &#160; &#160;关于在声明NSString属性时，我们是要选择strong特性，还是选择copy特性，是需要通过开发过程中的实际情况来选择的。但是我们在大多数情况下，在生命NSString属性时，都是希望其不被改变，防止数据出错。所以大多数情况下还是选择copy特性，从而来避免一些无法预估的bug。在补充一下，当原字符串是NSMutableString类型，也就是可变类型的时候，strong特性操作只是增加了原字符串的引用计数，而copy特性操作则是进行深拷贝，所以在copy会耗费更多的内存资源跟性能。而对NSString类型不可变的，就不会有这种问题，但是基于现在这么强大的手机处理器性能，这些应该也不是什么大问题。
+
+

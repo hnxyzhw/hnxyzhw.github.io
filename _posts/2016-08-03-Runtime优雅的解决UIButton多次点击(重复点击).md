@@ -1,3 +1,8 @@
+---
+layout: post
+title: Runtime优雅的解决UIButton多次点击(重复点击)
+date: 2016-08-03 17:22:45.000000000 +09:00
+---
 　在实际开发中我们，点击一个button按键时，需要触发一个事件去执行。用户在正常操作情况下，单次点击时，button只会响应一次点击。但是如果用户多次点击一个button，那么就会引起这个事件被多次执行，导致一些bug的出现。
 如何优雅解决的这个问题呢？今天我们来使用Runtime来解决UIButton重复点击的问题。
 　首先新建一个分类category，继承于UIControl,名字自己定义。
@@ -113,3 +118,5 @@ static const char *UIcontrol_ignoreEvent = "UIcontrol_ignoreEvent";
 ```
 　运行demo,可以发现button多次点击的问题得到了解决。在设置button的相应点击事件的时间间隔，在这个 间隔时间内，button只会响应一次点击事件。
 　附上demo：[UIButtonMutablieClick](https://github.com/hnxyzhw/UIButtonMutablieClick.git)
+
+
