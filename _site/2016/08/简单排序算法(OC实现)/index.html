@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>简单排序算法(OC实现)</title>
+  <meta name="description" content="排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。********下面就介绍三种简单排序：">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="简单排序算法(OC实现)">
+  <meta name="twitter:description" content="排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。********下面就介绍三种简单排序：">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="简单排序算法(OC实现)">
+  <meta property="og:description" content="排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。********下面就介绍三种简单排序：">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://hnxyzhw.github.io/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/">
+  <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Allen Woody 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Allen Woody logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Allen Woody" class="blog-button">Allen Woody</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不要上来就说:给个代码吧!你应该想想为什么。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://www.jianshu.com/users/ec2765510404/latest_articles" target="_blank">我在简书上创建的有关于iOS开发的技术专辑，欢迎各位前来了解！</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="hnxyzhw blog" class="blog-button">博客列表</a></li>
+                
+                  <li class="navigation__item"><a href="https://github.com/hnxyzhw" target="_blank" title="My Projects">Github项目</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/1823801224" title="@1823801224 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/hnxyzhw" title="@hnxyzhw 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/hnxyzhw" title="@hnxyzhw" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Google Plus -->
+  <li class="navigation__item">
+    <a href="https://plus.google.com/hnxyzhw@gmail.com" rel="author" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google Plus</span>
+    </a>
+  </li>
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:hnxyzhw611@126.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-08-11 09:32:04 +0800" itemprop="datePublished" class="post-meta__date date">2016-08-11</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">简单排序算法(OC实现)</h1>
+  </header>
+
+  <section class="post">
+    <p>排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。
+<strong>**
+<img src="http://upload-images.jianshu.io/upload_images/683658-45e7bbfe2ca31998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="截图1.png" />
+**</strong>
+<img src="http://upload-images.jianshu.io/upload_images/683658-7441b514575a3484.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="截图2.png" />
+<strong>**
+<img src="http://upload-images.jianshu.io/upload_images/683658-c9e99cffcee7cd66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="截图3.png" />
+**</strong>
+下面就介绍三种简单排序：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//属性
+</span><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">selectSortBtn</span><span class="p">;</span><span class="c1">//选择排序
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">insertSortBtn</span><span class="p">;</span><span class="c1">//插入排序
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">shellSortBtn</span><span class="p">;</span><span class="c1">//希尔排序
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UITextView</span> <span class="o">*</span><span class="n">resultTextView</span><span class="p">;</span><span class="c1">//排序过程
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UITextView</span> <span class="o">*</span><span class="n">methodDesTextView</span><span class="p">;</span><span class="c1">//算法简单描述
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span><span class="kt">double</span>  <span class="n">count</span><span class="p">;</span><span class="c1">//用于保存运算次数
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">calculateCount</span><span class="p">;</span><span class="c1">//计算次数
+</span>
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<p>1：选择排序算法
+选择排序算法就是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。这种算法不会因为数据源是否是有序数组而改变排序计算次数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//
+- (IBAction)selectSort:(UIButton *)sender {
+    //排序算法思路
+     _count = 0;
+    [_calculateCount setTitle:@"交换次数" forState:UIControlStateNormal];
+    self.resultTextView.text = @"排序结果:";
+    self.methodDesTextView.text = @"算法简介:\n关键点是拿到当前数组的最小的元素跟剩下的元素依次比较\n拿到首个元素，将这个元素的值作为首次遍历时的数组元素的最小值，它的下标记作最小元素的下标\n然后开始从0遍历整个数组，这个最小值跟数组里面的所有值进行比较\n如果在遍历过程中有数组元素的值有比当前记录的最小值,那么就需要变更之前记录的最小值，以及最小值元素的下标\n然后讲当前遍历的首个元素跟记录的最小元素，交换一下位置，如此反复就可以达到排序的效果\n特点：不会因是否有序数组而改变排序计算次数";
+    NSArray *array = @[@(13),@(5),@(9),@(12),@(10),@(4),@(1),@(7)];//无序
+//    NSArray *array =@[@(1),@(5),@(9),@(12),@(10),@(4),@(7),@(13)];//部分有序
+    array = [self selectSort:[array mutableCopy] withStartIndex:0];
+}
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(NSMutableArray *)selectSort:(NSMutableArray *)array withStartIndex:(int)start{
+    if (start == array.count) {
+        return array;
+    }
+    int minVale = [array[start] intValue];
+    int minIndex = start;
+    for (int index = start; index &lt; array.count; index++) {
+        if (minVale &gt; [array[index] intValue]) {
+            minVale = [array[index] intValue];
+            minIndex = index;
+            _count ++;
+        }
+    }
+    [array exchangeObjectAtIndex:start withObjectAtIndex:minIndex];
+    self.resultTextView.text = [self.resultTextView.text stringByAppendingString:[NSString stringWithFormat:@"\nstart:%d--end:%ld--count:%.f:%@",start,array.count,_count,array]];
+    array = [self selectSort:array withStartIndex:start + 1];
+    return array;
+}
+</code></pre>
+</div>
+
+<p>2：插入排序算法
+插入算法把要排序的数组分成两部分：第一部分包含了这个数组的所有元素，但将最后一个元素除外（让数组多一个空间才有插入的位置），而第二部分就只包含这一个元素（即待插入元素）。在第一部分排序完成后，再将这个最后元素插入到已排好序的第一部分中。
+对于有序数组或部分有序数组，此排序方法是十分高效的。若果最小的元素都在最后部分的位置，那么该排序方法就会变得非常费劲了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (IBAction)insertSort:(UIButton *)sender {
+     _count = 0;
+    [_calculateCount setTitle:@"交换次数" forState:UIControlStateNormal];
+    self.resultTextView.text = @"排序结果:";
+    self.methodDesTextView.text = @"算法简介:\n始终定义第一个元素为有序的，将元素逐个插入到有序排列之中\n其特点是要不断的移动数据，空出一个适当的位置，把待插入的元素放到里面去\n特点：对于有序数组或部分有序数组，此排序方法是十分高效的\n若果最小的元素都在最后部分的位置，那么该排序方法就会变得非常费劲了";
+    NSArray *array =@[@(13),@(5),@(9),@(12),@(10),@(4),@(1),@(7)];//无序
+//    NSArray *array =@[@(1),@(5),@(9),@(12),@(10),@(4),@(7),@(13)];//部分有序
+    array = [self insertSortArray:[array mutableCopy]];
+}
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(NSMutableArray *)insertSortArray:(NSMutableArray *)array{
+    for (int i = 1; i &lt; array.count; i ++) {
+        int temp = [array[i] intValue];
+        int j = i;
+        for (; j &gt; 0 &amp;&amp; temp &lt; [array[j -1] intValue]; j --) {
+            array[j] =  array[j - 1];
+            _count ++;
+            
+        }
+        array[j] = @(temp);
+        self.resultTextView.text = [self.resultTextView.text stringByAppendingString:[NSString stringWithFormat:@"\nstart-%d--count:%.f:%@",i,_count,array]];  
+    }
+    return array;
+}
+</code></pre>
+</div>
+
+<p>3：希尔排序算法
+希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止。
+希尔排序是直接插入排序算法的一种更高效的改进版本，性能上比选择排序和插入排序快得多,中等大小规模表现良好，对规模非常大的数据排序不是最优选择。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (IBAction)shellSort:(UIButton *)sender {
+    _count = 0;
+    [_calculateCount setTitle:@"交换次数" forState:UIControlStateNormal];
+    self.resultTextView.text = @"排序结果:";
+    self.methodDesTextView.text = @"算法简介:\n希尔排序是直接插入排序算法的一种更高效的改进版本\n使数组中任意间隔为N的元素都是有序的,这样的数组为N有序数组。N有序数组可以看作是N个小的有序数组所构成的一个数组\n记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止\n特点：性能上比选择排序和插入排序快得多,中等大小规模表现良好，对规模非常大的数据排序不是最优选择";
+    NSArray *array =@[@(13),@(5),@(9),@(12),@(10),@(4),@(1),@(7)];//无序
+//    NSArray *array =@[@(1),@(5),@(9),@(12),@(10),@(4),@(7),@(13)];//部分有序
+    [self shellSortArray:[array mutableCopy] withGapH:(int)array.count/2];
+}
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(NSMutableArray *)shellSortArray:(NSMutableArray *)array withGapH:(int)gapH {
+    
+    if (gapH &lt; 1 ) {
+       return array;
+    }else{
+        for (int i = gapH; i &lt; (int)array.count; i++ ) {
+            int temp = [array[i] intValue];
+            int j = i;
+            while (j &gt;= gapH &amp;&amp; temp &lt; [array[j - gapH] intValue]) {
+                [self exchangeArray:array withNIndex:j andMIndex:j - gapH];
+                j -= gapH;
+                _count ++;
+            }
+            array[j] = @(temp);
+            
+        }
+        self.resultTextView.text = [self.resultTextView.text stringByAppendingString:[NSString stringWithFormat:@"\nsortgapH-%d--count:%.f:%@",gapH,_count,array]];
+        gapH = gapH/2;
+        [self shellSortArray:array withGapH:gapH];
+    }
+    
+    return array;
+}
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//交换两个元素
+-(void)exchangeArray:(NSMutableArray *)array withNIndex:(int)n andMIndex:(int)m{
+    int temp = [array[n] intValue];
+    array[n] = array[m];
+    array[m] = @(temp);
+}
+</code></pre>
+</div>
+
+<p>本文示例demo链接：<a href="https://github.com/hnxyzhw/OC_SortingAlgorithm.git">OC_SortingAlgorithm</a>
+其实还有很多排序算法没有总结，像冒泡排序算法，快速排序算法，堆排序算法，归并排序算法，计数排序算法，桶排序算法，基数排序算法等等。以后也会花一些时间研究一下这些排序算法，给自己多充点电。</p>
+
+
+  </section>
+</article>
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/08/简单排序算法(OC实现)" data-title="简单排序算法(OC实现)" data-url="http://127.0.0.1:4000//2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"test-comments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/" title="link to iOS中NSString的strong、copy的使用">iOS中NSString的strong、copy的使用</a></h2>
+       <p class="excerpt">       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：**       说明：设置为Yes是ARC环境下，设置为NO是MRC环境下。**       进入正题，我们在声明一个NSString类型的属性时，会遇到这样的一个问题。就是应该使用strong呢？还是应该用...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-08-30 15:15:34 +0800" class="post-list__meta--date date">2016-08-30</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="link to ios8-横屏状态栏不显示解决方法">ios8-横屏状态栏不显示解决方法</a></h2>
+       <p class="excerpt">开发过程中发现ios8下横屏状态栏不显示Tips：解决这个问题，需要我们按照以下步骤操作1：在plist文件中将 View controller-based status bar appearance 设置为NO2：还需要application:didFinishLaunchingWithOptions:中添加以下下面代码(下面的两段代码必不可少)**[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimatio...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-08-08 11:40:37 +0800" class="post-list__meta--date date">2016-08-08</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "https://hnxyzhw.github.io/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/";
+        this.page.identifier = "/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-12-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

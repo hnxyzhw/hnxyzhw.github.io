@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>iOS中NSString的strong、copy的使用</title>
+  <meta name="description" content="       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：**       说明：设置为...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="iOS中NSString的strong、copy的使用">
+  <meta name="twitter:description" content="       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：**       说明：设置为...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="iOS中NSString的strong、copy的使用">
+  <meta property="og:description" content="       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：**       说明：设置为...">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://hnxyzhw.github.io/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/">
+  <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Allen Woody 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Allen Woody logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Allen Woody" class="blog-button">Allen Woody</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不要上来就说:给个代码吧!你应该想想为什么。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://www.jianshu.com/users/ec2765510404/latest_articles" target="_blank">我在简书上创建的有关于iOS开发的技术专辑，欢迎各位前来了解！</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="hnxyzhw blog" class="blog-button">博客列表</a></li>
+                
+                  <li class="navigation__item"><a href="https://github.com/hnxyzhw" target="_blank" title="My Projects">Github项目</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/1823801224" title="@1823801224 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/hnxyzhw" title="@hnxyzhw 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/hnxyzhw" title="@hnxyzhw" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Google Plus -->
+  <li class="navigation__item">
+    <a href="https://plus.google.com/hnxyzhw@gmail.com" rel="author" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google Plus</span>
+    </a>
+  </li>
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:hnxyzhw611@126.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-08-30 15:15:34 +0800" itemprop="datePublished" class="post-meta__date date">2016-08-30</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">iOS中NSString的strong、copy的使用</h1>
+  </header>
+
+  <section class="post">
+    <p>       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：
+<strong>**
+<img src="http://upload-images.jianshu.io/upload_images/683658-f796e399a5cc4ca9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ARC/MRC.png" />
+       说明：设置为Yes是ARC环境下，设置为NO是MRC环境下。
+**</strong>
+       进入正题，我们在声明一个NSString类型的属性时，会遇到这样的一个问题。就是应该使用strong呢？还是应该用copy呢？下面我们通过具体的代码来分析一下两者的区别跟用法。</p>
+
+<p><strong>操作：</strong>
+       首先我们先声明两个不同的字符串属性，用来做比对，代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">theStrongStr</span><span class="p">;</span> <span class="c1">//strong 字符串
+</span><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">theCopyStr</span><span class="p">;</span>     <span class="c1">//copy 字符串
+</span><span class="k">@end</span>
+</code></pre>
+</div>
+<p>       theStrongStr的内存特性是strong，theCopyStr的内存特性是copy，以便我们区分。
+<em>**</em></p>
+
+<p>       创建下面两个方法testString，testMutabelString：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(void)testString{
+    NSLog(@"-------------NString--------------");
+    //创建一个不可变源字符串
+    NSString *originStr = @"iOS";
+    //初始化strong字符串
+    self.theStrongStr = originStr;
+    //初始化copy字符串
+    self.theCopyStr = originStr;
+    
+    //打印字符串指向的地址,已经对应的内存地址
+    NSLog(@"the origin string:%p, %p",originStr,&amp;originStr);
+    
+    NSLog(@"the strong string:%p, %p",_theStrongStr,&amp;_theStrongStr);
+    
+    NSLog(@"the copy string:%p, %p",_theCopyStr,&amp;_theCopyStr);
+    
+}
+</code></pre>
+</div>
+<hr />
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(void)testMutabelString{
+    NSLog(@"-------------NSMutableString--------------");
+    //创建一个可变源字符串
+    NSMutableString *originStr = [NSMutableString stringWithFormat:@"iOS"];
+    //初始化strong字符串
+    self.theStrongStr = originStr;
+    //初始化copy字符串
+    self.theCopyStr = originStr;
+    
+    //打印字符串指向的地址,已经对应的内存地址
+    NSLog(@"the origin string:%p, %p",originStr,&amp;originStr);
+    
+    NSLog(@"the strong string:%p, %p",_theStrongStr,&amp;_theStrongStr);
+    
+    NSLog(@"the copy string:%p, %p",_theCopyStr,&amp;_theCopyStr);
+}
+</code></pre>
+</div>
+<p>       在viewDidLoad里调用这个两个方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self testString];
+    [self testMutabelString];
+}
+</code></pre>
+</div>
+<p>       运行看到输出的结果如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iOSCopyAndStrong[1076:1312388] -------------NString--------------
+iOSCopyAndStrong[1076:1312388] the origin string:0x109eff098, 0x7fff55d00958
+iOSCopyAndStrong[1076:1312388] the strong string:0x109eff098, 0x7fb0a2c55050
+iOSCopyAndStrong[1076:1312388] the copy string:0x109eff098, 0x7fb0a2c55058
+iOSCopyAndStrong[1076:1312388] -------------NSMutableString--------------
+iOSCopyAndStrong[1076:1312388] the origin string:0x7fb0a2f79d50, 0x7fff55d00958
+iOSCopyAndStrong[1076:1312388] the strong string:0x7fb0a2f79d50, 0x7fb0a2c55050
+iOSCopyAndStrong[1076:1312388] the copy string:0xa00000000534f693, 0x7fb0a2c55058
+
+</code></pre>
+</div>
+<hr />
+
+<p><strong>testString：</strong>
+       在testString方法里我们使用的原字符串string是一个不可变的字符串。在这种情况下，我的可以看到我们创建的strong特性的对象，跟copy特性的对象,它们所指向的地址都是同一个地址<code class="highlighter-rouge">0x109eff098</code>，也就是我们使用的不可变字符串<code class="highlighter-rouge">NSString *originStr = @"iOS";</code>它所指向的地址。我们可以开启MRC模式，打断点调试，查看当前定义这个不可变字符串originStr的引用计数，可以发现执行完操作后<code class="highlighter-rouge">self.theStrongStr = originStr;self.theCopyStr = originStr;</code>，originStr的引用计数发生了改变1-&gt;3。每次执行都使原来的字符串originStr对象的引用计数+1。</p>
+
+<p><strong>testMutabelString：</strong>
+       在testMutabelString方法里面我们使用的原字符串string是一个可变的字符串<code class="highlighter-rouge">NSMutableString *originStr = [NSMutableString stringWithFormat:@"iOS"];</code>。可以看到输出结果，使用strong特性的对象仍然指向原字符串originStr的地址，而使用copy特性的对象，所指向的是一个新的地址。其实就是copy特性的对象对原字符串originStr进行了深考贝，并指向了这个这个新的地址。我们开启MRC模式，打断点调试，查看到在执行操作后，originStr对象的引用计数1-&gt;2，而_theCopyStr对象的引用计数为1。这也就验证copy创建了一个新对象的说法。
+       在testMutabelString方法中，不管我们如何修改originStr字符串，_theStrongStr所指向的地址也是跟着originStr字符串指向的地址变动的，这也就证明了_theStrongStr的类型实际上是可变类型NSMutableString，而不是NSString。同理_theCopyStr是指向一个新创建的对象，是不可以改变的。</p>
+
+<hr />
+
+<p><strong>归纳总结：</strong>
+             当原字符串是NSString类型时，由于它是不可变类型的，不管是使用strong特性，还是copy特性的对象，它们所指向的地址都跟原字符串是一样的，都指向原字符串对象。也就是说当原字符串是NSString类型时，copy特性的操作，只是做了一次浅拷贝，只是增加了指针指向原字符串所指向的地址。</p>
+
+<p>       当原字符串是NSMutableString类型时，strong特性对象只是增加了原字符串的引用计数，但是copy特性对象则是对原字符串进行了深拷贝，创建了一个新对象，并且指向了这个新对象。此时，copy特性对象是NSString类型的不可变的,strong特性对象是NSMutableString类型的可变的。</p>
+
+<p>       关于在声明NSString属性时，我们是要选择strong特性，还是选择copy特性，是需要通过开发过程中的实际情况来选择的。但是我们在大多数情况下，在生命NSString属性时，都是希望其不被改变，防止数据出错。所以大多数情况下还是选择copy特性，从而来避免一些无法预估的bug。在补充一下，当原字符串是NSMutableString类型，也就是可变类型的时候，strong特性操作只是增加了原字符串的引用计数，而copy特性操作则是进行深拷贝，所以在copy会耗费更多的内存资源跟性能。而对NSString类型不可变的，就不会有这种问题，但是基于现在这么强大的手机处理器性能，这些应该也不是什么大问题。</p>
+
+
+  </section>
+</article>
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/08/iOS中NSString的strong、copy的使用" data-title="iOS中NSString的strong、copy的使用" data-url="http://127.0.0.1:4000//2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"test-comments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/" title="link to title和leftBarButtonItem不显示">title和leftBarButtonItem不显示</a></h2>
+       <p class="excerpt">之前自定义了navigationBar的背景颜色，升级到iOS10后，发现title,跟leftBarButtonItem不显示。iOS9 之前的navigationBar的背景是_UINavigationBarBackground，到iOS变成了_UIBarBackground，可以通过xcode查看一下相应的布局。我的解决办法是，分别判断iOS10，iOS9的版本，找到对应的背景图，将起隐藏掉，可以消除分割线。然后重新创建一个视图层，颜色可以自定义，需要注意在添加视图或者更新视图时要放...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-09-19 18:41:07 +0800" class="post-list__meta--date date">2016-09-19</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/" title="link to 简单排序算法(OC实现)">简单排序算法(OC实现)</a></h2>
+       <p class="excerpt">排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。********下面就介绍三种简单排序：//属性@interface ViewController ()@property (weak, nonatomic) IBOutlet UIButton *selectSortBtn;//选择排序@property...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-08-11 09:32:04 +0800" class="post-list__meta--date date">2016-08-11</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "https://hnxyzhw.github.io/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/";
+        this.page.identifier = "/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-12-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

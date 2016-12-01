@@ -6,17 +6,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>Sample Post</title>
-  <meta name="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <title>iOS自定义debug模式下的NSLog宏输出</title>
+  <meta name="description" content="在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。">
   <meta name="author" content="Wei Wang">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Sample Post">
-  <meta name="twitter:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <meta name="twitter:title" content="iOS自定义debug模式下的NSLog宏输出">
+  <meta name="twitter:description" content="在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。">
   
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Sample Post">
-  <meta property="og:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <meta property="og:title" content="iOS自定义debug模式下的NSLog宏输出">
+  <meta property="og:description" content="在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。">
   
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
   <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <link rel="canonical" href="https://hnxyzhw.github.io/2016/02/sample-post/">
+  <link rel="canonical" href="https://hnxyzhw.github.io/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/">
   <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
   
   <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
@@ -150,32 +150,56 @@
             <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-02-15 14:32:24 +0800" itemprop="datePublished" class="post-meta__date date">2016-02-15</time> &#8226; <span class="post-meta__tags tags"></span>
+      <time datetime="2016-11-18 08:52:35 +0800" itemprop="datePublished" class="post-meta__date date">2016-11-18</time> &#8226; <span class="post-meta__tags tags"></span>
     </div>
-    <h1 class="post-title">Sample Post</h1>
+    <h1 class="post-title">iOS自定义debug模式下的NSLog宏输出</h1>
   </header>
 
   <section class="post">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+    <p>在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。
+同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>先介绍一些参数：
+（1) <code class="highlighter-rouge">__VA_ARGS__</code>是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起到把前面多余的”,”去掉的作用,否则会编译出错, 你可以试试。
+（2)<code class="highlighter-rouge"> __FILE__</code>宏在预编译时会替换成当前的源文件名。
+（3)<code class="highlighter-rouge">__LINE__</code>宏在预编译时会替换成当前的行号。
+（4)<code class="highlighter-rouge"> __FUNCTION__</code>宏在预编译时会替换成当前的函数名称。</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p><strong>最简单的一个例子：</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>#ifdef DEBUG
+  #define MYLog(fmt, ...) NSLog((fmt), ##__VA_ARGS__);
+  #else
+  #define MYLog(...);
+  #endif
+</code></pre>
+</div>
+<p><strong>输出当前方法名</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>#define MYMethod(...) NSLog(@"%s", __func__);
+</code></pre>
+</div>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<p><strong>整理</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>#ifdef DEBUG
+  #define DLog(fmt, ...) NSLog((@"[文件名:%s]\n" "[函数名:%s]\n" "[行号:%d] \n" fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);
+  #define DeBugLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+  #define NSLog(...) NSLog(__VA_ARGS__);
+  #define MyNSLog(FORMAT, ...) fprintf(stderr,"[%s]:[line %d行] %s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+  #else
+  #define DLog(...)
+  #define DeBugLog(...)
+  #define NSLog(...)
+  #define MyNSLog(FORMAT, ...) nil
+  #endif
 
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+</code></pre>
+</div>
 
 
   </section>
 </article>
 
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/2016/02/sample-post" data-title="Sample Post" data-url="http://127.0.0.1:4000//2016/02/sample-post/"></div>
+	<div class="ds-thread" data-thread-key="/2016/11/iOS自定义debug模式下的NSLog宏输出" data-title="iOS自定义debug模式下的NSLog宏输出" data-url="http://127.0.0.1:4000//2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -196,12 +220,20 @@ var duoshuoQuery = {short_name:"test-comments"};
    
    <div class="read-more-item">
        <span class="read-more-item-dim">最近的文章</span>
-       <h2 class="post-list__post-title post-title"><a href="/2016/02/hello-world-vno/" title="link to Hello World - Vno">Hello World - Vno</a></h2>
-       <p class="excerpt">What’s thisVno Jekyll is a theme for Jekyll. It is a port of my Ghost theme vno, which is originally developed from Dale Anthony’s Uno.Usage$ git clone https://github.com/onevcat/vno-jekyll.git your_site$ cd your_site$ bundler install$ bundler exe...&hellip;</p>
-       <div class="post-list__meta"><time datetime="2016-02-16 14:32:24 +0800" class="post-list__meta--date date">2016-02-16</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/02/hello-world-vno/>继续阅读</a></div>
+       <h2 class="post-list__post-title post-title"><a href="/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/" title="link to 适配iOS状态栏颜色">适配iOS状态栏颜色</a></h2>
+       <p class="excerpt">Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：&lt;Error&gt;: CGContextSaveGState: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable&lt;Error&gt;: CGContextRestoreGState: invalid context 0x0. If you ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-11-28 09:32:38 +0800" class="post-list__meta--date date">2016-11-28</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/>继续阅读</a></div>
    </div>
    
    
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/" title="link to title和leftBarButtonItem不显示">title和leftBarButtonItem不显示</a></h2>
+       <p class="excerpt">之前自定义了navigationBar的背景颜色，升级到iOS10后，发现title,跟leftBarButtonItem不显示。iOS9 之前的navigationBar的背景是_UINavigationBarBackground，到iOS变成了_UIBarBackground，可以通过xcode查看一下相应的布局。我的解决办法是，分别判断iOS10，iOS9的版本，找到对应的背景图，将起隐藏掉，可以消除分割线。然后重新创建一个视图层，颜色可以自定义，需要注意在添加视图或者更新视图时要放...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-09-19 18:41:07 +0800" class="post-list__meta--date date">2016-09-19</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/>继续阅读</a></div>
+   </div>
    
 </section>
 
@@ -211,8 +243,8 @@ var duoshuoQuery = {short_name:"test-comments"};
     <script>
     
     var disqus_config = function () {
-        this.page.url = "https://hnxyzhw.github.io/2016/02/sample-post/";
-        this.page.identifier = "/2016/02/sample-post/";
+        this.page.url = "https://hnxyzhw.github.io/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/";
+        this.page.identifier = "/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/";
     };
 
     var disqus_shortname = 'vno-jekyll';

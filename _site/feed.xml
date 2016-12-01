@@ -5,9 +5,861 @@
     <description>嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</description>
     <link>https://hnxyzhw.github.io/</link>
     <atom:link href="https://hnxyzhw.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Nov 2016 23:59:04 +0800</pubDate>
-    <lastBuildDate>Wed, 30 Nov 2016 23:59:04 +0800</lastBuildDate>
+    <pubDate>Thu, 01 Dec 2016 14:27:49 +0800</pubDate>
+    <lastBuildDate>Thu, 01 Dec 2016 14:27:49 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>适配iOS状态栏颜色</title>
+        <description>&lt;p&gt;Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;Error&amp;gt;: CGContextSaveGState: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable
+&amp;lt;Error&amp;gt;: CGContextRestoreGState: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;具体原因：设置 app 的状态栏样式的使用了旧的方法。
+之前需要兼容iOS7，iOS8。会在 info.plist 里面的 View controller-based status bar appearance （默认会为 YES）设置为NO，如果不设置的话默认也是YES。&lt;/p&gt;
+
+&lt;p&gt;可以调用该方法来改变状态栏目的颜色：
+&lt;code class=&quot;highlighter-rouge&quot;&gt;[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;但是到了iOS9就会报错警告，虽然不影响程序运行，但作为强迫症的程序猿，这个警告的存在不能忍啊。为了兼容iOS9，需要做以下修改：
+将info.plist 里面的 View controller-based status bar appearance 删除（默认为 YES），或设置为YES。同时需要使用新的方法来设置状态栏目的颜色：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (UIStatusBarStyle)preferredStatusBarStyle;
+- (UIViewController *)childViewControllerForStatusBarStyle;
+- (void)setNeedsStatusBarAppearanceUpdate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;1：如果我们的rootViewController是ViewController那么只需要在VC中实现以下方法(clean 下或者删除应用程序重新运行)：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//设置状态栏的白色
+ -(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;2：如果我们的rootViewController是navigationController，按照上边的方法设置你会发现是无法解决问题的。
+我们必须设置 rootViewController，编译器才会去 rootViewController 中重载 preferredStatusBarStyle 方法。此时我们的 rootViewController是当前的navigationController
+在appdelegate里面我们对rootViewController做一下设置：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;self.window.rootViewController = self.navigationController;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;在对应的VC里我们需要做以下设置：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;对于navigationController状态栏颜色的修改，我们也可以重新写一个navigationController的分类来实现preferredStatusBarStyle方法的调用。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//.h文件
+//  UINavigationController+StatusBarStyle.h
+&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#import
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UINavigationController&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StatusBarStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// .m文件
+//  UINavigationController+StatusBarStyle.m
+&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#import &quot;UINavigationController+StatusBarStyle.h&quot;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UINavigationController&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StatusBarStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIStatusBarStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preferredStatusBarStyle&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//also you may add any fancy condition-based code here
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIStatusBarStyleLightContent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;通过这个分类就可以自定义我们的状态栏的颜色了。&lt;/p&gt;
+
+&lt;p&gt;3：还有就是在初始化登录注册界面时，一些button的背景图没有使用切图。通过颜色值来绘制一张纯色的背景图片。在编译运行时出现一下错误：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;Error&amp;gt;: CGContextSetStrokeColorWithColor: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+&amp;lt;Error&amp;gt;: CGContextSetFillColorWithColor: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;具体绘图的方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - uicolor - uiimage
+- (UIImage*) createImageWithColor:(UIColor*) color rect:(CGRect)rect{
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;根据返回的错误问题，可以认为是在初始化的时候有问题。检索了一下类似的问题，得到如下回复：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;**若使用uikit绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate 的ref并且不能用于画图。
+使用UiKit，你只能在当前上下文中绘图，所以如果你当前处于UIGraphicsBeginImageContextWithOptions函数或drawRect：方法中，你就可以直接使用UIKit提供的方法进行绘图。
+如果你持有一个context：参数，那么使用UIKit提供的方法之前，必须将该上下文参数转化为当前上下文。
+幸运的是，调用UIGraphicsPushContext 函数可以方便的将context：参数转化为当前上下文，记住最后别忘了调用UIGraphicsPopContext函数恢复上下文环境。**
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;**使用Core Graphics之前需要指定一个用于绘图的图形上下文（CGContextRef），这个图形上下文会在每个绘图函数中都会被用到。
+如果你持有一个图形上下文context：参数，那么你等同于有了一个图形上下文，这个上下文也许就是你需要用来绘图的那个。
+如果你当前处于UIGraphicsBeginImageContextWithOptions函数或drawRect：方法中，并没有引用一个上下文。为了使用Core Graphics，你可以调用UIGraphicsGetCurrentContext函数获得当前的图形上下文。**
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最后在登陆注册界面，按键的背景色使用了切图。其他地方按键的背景色使用了绘制的方法，统一主题色调，方便修改。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 28 Nov 2016 09:32:38 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS自定义debug模式下的NSLog宏输出</title>
+        <description>&lt;p&gt;在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。
+同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。&lt;/p&gt;
+
+&lt;p&gt;先介绍一些参数：
+（1) &lt;code class=&quot;highlighter-rouge&quot;&gt;__VA_ARGS__&lt;/code&gt;是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起到把前面多余的”,”去掉的作用,否则会编译出错, 你可以试试。
+（2)&lt;code class=&quot;highlighter-rouge&quot;&gt; __FILE__&lt;/code&gt;宏在预编译时会替换成当前的源文件名。
+（3)&lt;code class=&quot;highlighter-rouge&quot;&gt;__LINE__&lt;/code&gt;宏在预编译时会替换成当前的行号。
+（4)&lt;code class=&quot;highlighter-rouge&quot;&gt; __FUNCTION__&lt;/code&gt;宏在预编译时会替换成当前的函数名称。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;最简单的一个例子：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#ifdef DEBUG
+  #define MYLog(fmt, ...) NSLog((fmt), ##__VA_ARGS__);
+  #else
+  #define MYLog(...);
+  #endif
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;输出当前方法名&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define MYMethod(...) NSLog(@&quot;%s&quot;, __func__);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;整理&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#ifdef DEBUG
+  #define DLog(fmt, ...) NSLog((@&quot;[文件名:%s]\n&quot; &quot;[函数名:%s]\n&quot; &quot;[行号:%d] \n&quot; fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);
+  #define DeBugLog(fmt, ...) NSLog((@&quot;%s [Line %d] &quot; fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+  #define NSLog(...) NSLog(__VA_ARGS__);
+  #define MyNSLog(FORMAT, ...) fprintf(stderr,&quot;[%s]:[line %d行] %s\n&quot;,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+  #else
+  #define DLog(...)
+  #define DeBugLog(...)
+  #define NSLog(...)
+  #define MyNSLog(FORMAT, ...) nil
+  #endif
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Fri, 18 Nov 2016 08:52:35 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>title和leftBarButtonItem不显示</title>
+        <description>&lt;p&gt;之前自定义了navigationBar的背景颜色，升级到iOS10后，发现title,跟leftBarButtonItem不显示。
+iOS9 之前的navigationBar的背景是_UINavigationBarBackground，到iOS变成了_UIBarBackground，可以通过xcode查看一下相应的布局。我的解决办法是，分别判断iOS10，iOS9的版本，找到对应的背景图，将起隐藏掉，可以消除分割线。然后重新创建一个视图层，颜色可以自定义，需要注意在添加视图或者更新视图时要放到主线程里，同时这个方法需要在viewWillAppear里调用。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define isIOS9 ([[UIDevice currentDevice].systemVersion intValue]&amp;gt;=9?YES:NO)
+#define isIOS10 ([[UIDevice currentDevice].systemVersion intValue]&amp;gt;=10?YES:NO)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - 动态修改状态栏跟顶部导航栏的颜色
+-(void)changeNavigationBarBackgroundColor:(UIColor *)barBackgroundColor{
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
+        NSArray *subviews =self.navigationController.navigationBar.subviews;
+        for (id viewObj in subviews) {
+            if (isIOS10) {
+                //iOS10,改变了状态栏的类为_UIBarBackground
+                NSString *classStr = [NSString stringWithUTF8String:object_getClassName(viewObj)];
+                if ([classStr isEqualToString:@&quot;_UIBarBackground&quot;]) {
+                    UIImageView *imageView=(UIImageView *)viewObj;
+                    imageView.hidden=YES;
+                }
+            }else{
+                //iOS9以及iOS9之前使用的是_UINavigationBarBackground
+                NSString *classStr = [NSString stringWithUTF8String:object_getClassName(viewObj)];
+                if ([classStr isEqualToString:@&quot;_UINavigationBarBackground&quot;]) {
+                    UIImageView *imageView=(UIImageView *)viewObj;
+                    imageView.hidden=YES;
+                }
+            }
+        }
+        UIImageView *imageView = [self.navigationController.navigationBar viewWithTag:111];
+        if (!imageView) {
+            imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, -20, self.view.width, 64)];
+            imageView.tag = 111;
+            [imageView setBackgroundColor:barBackgroundColor];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController.navigationBar insertSubview:imageView atIndex:0];
+            });
+        }else{
+            [imageView setBackgroundColor:barBackgroundColor];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController.navigationBar sendSubviewToBack:imageView];
+            });
+            
+        }
+        
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 19 Sep 2016 18:41:07 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS中NSString的strong、copy的使用</title>
+        <description>&lt;p&gt;       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：
+&lt;strong&gt;**
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-f796e399a5cc4ca9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;ARC/MRC.png&quot; /&gt;
+       说明：设置为Yes是ARC环境下，设置为NO是MRC环境下。
+**&lt;/strong&gt;
+       进入正题，我们在声明一个NSString类型的属性时，会遇到这样的一个问题。就是应该使用strong呢？还是应该用copy呢？下面我们通过具体的代码来分析一下两者的区别跟用法。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;操作：&lt;/strong&gt;
+       首先我们先声明两个不同的字符串属性，用来做比对，代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theStrongStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//strong 字符串
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theCopyStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;//copy 字符串
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;       theStrongStr的内存特性是strong，theCopyStr的内存特性是copy，以便我们区分。
+&lt;em&gt;**&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;       创建下面两个方法testString，testMutabelString：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-(void)testString{
+    NSLog(@&quot;-------------NString--------------&quot;);
+    //创建一个不可变源字符串
+    NSString *originStr = @&quot;iOS&quot;;
+    //初始化strong字符串
+    self.theStrongStr = originStr;
+    //初始化copy字符串
+    self.theCopyStr = originStr;
+    
+    //打印字符串指向的地址,已经对应的内存地址
+    NSLog(@&quot;the origin string:%p, %p&quot;,originStr,&amp;amp;originStr);
+    
+    NSLog(@&quot;the strong string:%p, %p&quot;,_theStrongStr,&amp;amp;_theStrongStr);
+    
+    NSLog(@&quot;the copy string:%p, %p&quot;,_theCopyStr,&amp;amp;_theCopyStr);
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;hr /&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-(void)testMutabelString{
+    NSLog(@&quot;-------------NSMutableString--------------&quot;);
+    //创建一个可变源字符串
+    NSMutableString *originStr = [NSMutableString stringWithFormat:@&quot;iOS&quot;];
+    //初始化strong字符串
+    self.theStrongStr = originStr;
+    //初始化copy字符串
+    self.theCopyStr = originStr;
+    
+    //打印字符串指向的地址,已经对应的内存地址
+    NSLog(@&quot;the origin string:%p, %p&quot;,originStr,&amp;amp;originStr);
+    
+    NSLog(@&quot;the strong string:%p, %p&quot;,_theStrongStr,&amp;amp;_theStrongStr);
+    
+    NSLog(@&quot;the copy string:%p, %p&quot;,_theCopyStr,&amp;amp;_theCopyStr);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;       在viewDidLoad里调用这个两个方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self testString];
+    [self testMutabelString];
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;       运行看到输出的结果如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iOSCopyAndStrong[1076:1312388] -------------NString--------------
+iOSCopyAndStrong[1076:1312388] the origin string:0x109eff098, 0x7fff55d00958
+iOSCopyAndStrong[1076:1312388] the strong string:0x109eff098, 0x7fb0a2c55050
+iOSCopyAndStrong[1076:1312388] the copy string:0x109eff098, 0x7fb0a2c55058
+iOSCopyAndStrong[1076:1312388] -------------NSMutableString--------------
+iOSCopyAndStrong[1076:1312388] the origin string:0x7fb0a2f79d50, 0x7fff55d00958
+iOSCopyAndStrong[1076:1312388] the strong string:0x7fb0a2f79d50, 0x7fb0a2c55050
+iOSCopyAndStrong[1076:1312388] the copy string:0xa00000000534f693, 0x7fb0a2c55058
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;testString：&lt;/strong&gt;
+       在testString方法里我们使用的原字符串string是一个不可变的字符串。在这种情况下，我的可以看到我们创建的strong特性的对象，跟copy特性的对象,它们所指向的地址都是同一个地址&lt;code class=&quot;highlighter-rouge&quot;&gt;0x109eff098&lt;/code&gt;，也就是我们使用的不可变字符串&lt;code class=&quot;highlighter-rouge&quot;&gt;NSString *originStr = @&quot;iOS&quot;;&lt;/code&gt;它所指向的地址。我们可以开启MRC模式，打断点调试，查看当前定义这个不可变字符串originStr的引用计数，可以发现执行完操作后&lt;code class=&quot;highlighter-rouge&quot;&gt;self.theStrongStr = originStr;self.theCopyStr = originStr;&lt;/code&gt;，originStr的引用计数发生了改变1-&amp;gt;3。每次执行都使原来的字符串originStr对象的引用计数+1。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;testMutabelString：&lt;/strong&gt;
+       在testMutabelString方法里面我们使用的原字符串string是一个可变的字符串&lt;code class=&quot;highlighter-rouge&quot;&gt;NSMutableString *originStr = [NSMutableString stringWithFormat:@&quot;iOS&quot;];&lt;/code&gt;。可以看到输出结果，使用strong特性的对象仍然指向原字符串originStr的地址，而使用copy特性的对象，所指向的是一个新的地址。其实就是copy特性的对象对原字符串originStr进行了深考贝，并指向了这个这个新的地址。我们开启MRC模式，打断点调试，查看到在执行操作后，originStr对象的引用计数1-&amp;gt;2，而_theCopyStr对象的引用计数为1。这也就验证copy创建了一个新对象的说法。
+       在testMutabelString方法中，不管我们如何修改originStr字符串，_theStrongStr所指向的地址也是跟着originStr字符串指向的地址变动的，这也就证明了_theStrongStr的类型实际上是可变类型NSMutableString，而不是NSString。同理_theCopyStr是指向一个新创建的对象，是不可以改变的。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;归纳总结：&lt;/strong&gt;
+             当原字符串是NSString类型时，由于它是不可变类型的，不管是使用strong特性，还是copy特性的对象，它们所指向的地址都跟原字符串是一样的，都指向原字符串对象。也就是说当原字符串是NSString类型时，copy特性的操作，只是做了一次浅拷贝，只是增加了指针指向原字符串所指向的地址。&lt;/p&gt;
+
+&lt;p&gt;       当原字符串是NSMutableString类型时，strong特性对象只是增加了原字符串的引用计数，但是copy特性对象则是对原字符串进行了深拷贝，创建了一个新对象，并且指向了这个新对象。此时，copy特性对象是NSString类型的不可变的,strong特性对象是NSMutableString类型的可变的。&lt;/p&gt;
+
+&lt;p&gt;       关于在声明NSString属性时，我们是要选择strong特性，还是选择copy特性，是需要通过开发过程中的实际情况来选择的。但是我们在大多数情况下，在生命NSString属性时，都是希望其不被改变，防止数据出错。所以大多数情况下还是选择copy特性，从而来避免一些无法预估的bug。在补充一下，当原字符串是NSMutableString类型，也就是可变类型的时候，strong特性操作只是增加了原字符串的引用计数，而copy特性操作则是进行深拷贝，所以在copy会耗费更多的内存资源跟性能。而对NSString类型不可变的，就不会有这种问题，但是基于现在这么强大的手机处理器性能，这些应该也不是什么大问题。&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 30 Aug 2016 15:15:34 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>简单排序算法(OC实现)</title>
+        <description>&lt;p&gt;排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。
+&lt;strong&gt;**
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-45e7bbfe2ca31998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;截图1.png&quot; /&gt;
+**&lt;/strong&gt;
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-7441b514575a3484.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;截图2.png&quot; /&gt;
+&lt;strong&gt;**
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-c9e99cffcee7cd66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;截图3.png&quot; /&gt;
+**&lt;/strong&gt;
+下面就介绍三种简单排序：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//属性
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selectSortBtn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//选择排序
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;insertSortBtn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//插入排序
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shellSortBtn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//希尔排序
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UITextView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultTextView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//排序过程
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UITextView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methodDesTextView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//算法简单描述
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//用于保存运算次数
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;calculateCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//计算次数
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;1：选择排序算法
+选择排序算法就是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。这种算法不会因为数据源是否是有序数组而改变排序计算次数。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//
+- (IBAction)selectSort:(UIButton *)sender {
+    //排序算法思路
+     _count = 0;
+    [_calculateCount setTitle:@&quot;交换次数&quot; forState:UIControlStateNormal];
+    self.resultTextView.text = @&quot;排序结果:&quot;;
+    self.methodDesTextView.text = @&quot;算法简介:\n关键点是拿到当前数组的最小的元素跟剩下的元素依次比较\n拿到首个元素，将这个元素的值作为首次遍历时的数组元素的最小值，它的下标记作最小元素的下标\n然后开始从0遍历整个数组，这个最小值跟数组里面的所有值进行比较\n如果在遍历过程中有数组元素的值有比当前记录的最小值,那么就需要变更之前记录的最小值，以及最小值元素的下标\n然后讲当前遍历的首个元素跟记录的最小元素，交换一下位置，如此反复就可以达到排序的效果\n特点：不会因是否有序数组而改变排序计算次数&quot;;
+    NSArray *array = @[@(13),@(5),@(9),@(12),@(10),@(4),@(1),@(7)];//无序
+//    NSArray *array =@[@(1),@(5),@(9),@(12),@(10),@(4),@(7),@(13)];//部分有序
+    array = [self selectSort:[array mutableCopy] withStartIndex:0];
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-(NSMutableArray *)selectSort:(NSMutableArray *)array withStartIndex:(int)start{
+    if (start == array.count) {
+        return array;
+    }
+    int minVale = [array[start] intValue];
+    int minIndex = start;
+    for (int index = start; index &amp;lt; array.count; index++) {
+        if (minVale &amp;gt; [array[index] intValue]) {
+            minVale = [array[index] intValue];
+            minIndex = index;
+            _count ++;
+        }
+    }
+    [array exchangeObjectAtIndex:start withObjectAtIndex:minIndex];
+    self.resultTextView.text = [self.resultTextView.text stringByAppendingString:[NSString stringWithFormat:@&quot;\nstart:%d--end:%ld--count:%.f:%@&quot;,start,array.count,_count,array]];
+    array = [self selectSort:array withStartIndex:start + 1];
+    return array;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;2：插入排序算法
+插入算法把要排序的数组分成两部分：第一部分包含了这个数组的所有元素，但将最后一个元素除外（让数组多一个空间才有插入的位置），而第二部分就只包含这一个元素（即待插入元素）。在第一部分排序完成后，再将这个最后元素插入到已排好序的第一部分中。
+对于有序数组或部分有序数组，此排序方法是十分高效的。若果最小的元素都在最后部分的位置，那么该排序方法就会变得非常费劲了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (IBAction)insertSort:(UIButton *)sender {
+     _count = 0;
+    [_calculateCount setTitle:@&quot;交换次数&quot; forState:UIControlStateNormal];
+    self.resultTextView.text = @&quot;排序结果:&quot;;
+    self.methodDesTextView.text = @&quot;算法简介:\n始终定义第一个元素为有序的，将元素逐个插入到有序排列之中\n其特点是要不断的移动数据，空出一个适当的位置，把待插入的元素放到里面去\n特点：对于有序数组或部分有序数组，此排序方法是十分高效的\n若果最小的元素都在最后部分的位置，那么该排序方法就会变得非常费劲了&quot;;
+    NSArray *array =@[@(13),@(5),@(9),@(12),@(10),@(4),@(1),@(7)];//无序
+//    NSArray *array =@[@(1),@(5),@(9),@(12),@(10),@(4),@(7),@(13)];//部分有序
+    array = [self insertSortArray:[array mutableCopy]];
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-(NSMutableArray *)insertSortArray:(NSMutableArray *)array{
+    for (int i = 1; i &amp;lt; array.count; i ++) {
+        int temp = [array[i] intValue];
+        int j = i;
+        for (; j &amp;gt; 0 &amp;amp;&amp;amp; temp &amp;lt; [array[j -1] intValue]; j --) {
+            array[j] =  array[j - 1];
+            _count ++;
+            
+        }
+        array[j] = @(temp);
+        self.resultTextView.text = [self.resultTextView.text stringByAppendingString:[NSString stringWithFormat:@&quot;\nstart-%d--count:%.f:%@&quot;,i,_count,array]];  
+    }
+    return array;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;3：希尔排序算法
+希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止。
+希尔排序是直接插入排序算法的一种更高效的改进版本，性能上比选择排序和插入排序快得多,中等大小规模表现良好，对规模非常大的数据排序不是最优选择。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (IBAction)shellSort:(UIButton *)sender {
+    _count = 0;
+    [_calculateCount setTitle:@&quot;交换次数&quot; forState:UIControlStateNormal];
+    self.resultTextView.text = @&quot;排序结果:&quot;;
+    self.methodDesTextView.text = @&quot;算法简介:\n希尔排序是直接插入排序算法的一种更高效的改进版本\n使数组中任意间隔为N的元素都是有序的,这样的数组为N有序数组。N有序数组可以看作是N个小的有序数组所构成的一个数组\n记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止\n特点：性能上比选择排序和插入排序快得多,中等大小规模表现良好，对规模非常大的数据排序不是最优选择&quot;;
+    NSArray *array =@[@(13),@(5),@(9),@(12),@(10),@(4),@(1),@(7)];//无序
+//    NSArray *array =@[@(1),@(5),@(9),@(12),@(10),@(4),@(7),@(13)];//部分有序
+    [self shellSortArray:[array mutableCopy] withGapH:(int)array.count/2];
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-(NSMutableArray *)shellSortArray:(NSMutableArray *)array withGapH:(int)gapH {
+    
+    if (gapH &amp;lt; 1 ) {
+       return array;
+    }else{
+        for (int i = gapH; i &amp;lt; (int)array.count; i++ ) {
+            int temp = [array[i] intValue];
+            int j = i;
+            while (j &amp;gt;= gapH &amp;amp;&amp;amp; temp &amp;lt; [array[j - gapH] intValue]) {
+                [self exchangeArray:array withNIndex:j andMIndex:j - gapH];
+                j -= gapH;
+                _count ++;
+            }
+            array[j] = @(temp);
+            
+        }
+        self.resultTextView.text = [self.resultTextView.text stringByAppendingString:[NSString stringWithFormat:@&quot;\nsortgapH-%d--count:%.f:%@&quot;,gapH,_count,array]];
+        gapH = gapH/2;
+        [self shellSortArray:array withGapH:gapH];
+    }
+    
+    return array;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//交换两个元素
+-(void)exchangeArray:(NSMutableArray *)array withNIndex:(int)n andMIndex:(int)m{
+    int temp = [array[n] intValue];
+    array[n] = array[m];
+    array[m] = @(temp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;本文示例demo链接：&lt;a href=&quot;https://github.com/hnxyzhw/OC_SortingAlgorithm.git&quot;&gt;OC_SortingAlgorithm&lt;/a&gt;
+其实还有很多排序算法没有总结，像冒泡排序算法，快速排序算法，堆排序算法，归并排序算法，计数排序算法，桶排序算法，基数排序算法等等。以后也会花一些时间研究一下这些排序算法，给自己多充点电。&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 11 Aug 2016 09:32:04 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>ios8-横屏状态栏不显示解决方法</title>
+        <description>&lt;p&gt;开发过程中发现ios8下横屏状态栏不显示&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-885acfc974603966.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;竖屏显示状态栏.png&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-0f9efa98d75551ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;横屏不显示状态栏.png&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Tips：解决这个问题，需要我们按照以下步骤操作
+1：在plist文件中将 View controller-based status bar appearance 设置为NO&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-08640aa43afb2545.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;plist文件.png&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;2：还需要application:didFinishLaunchingWithOptions:中添加以下下面代码(下面的两段代码必不可少)
+&lt;em&gt;**&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-483d2a7c2217e8fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;代码调用.png&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone]; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 08 Aug 2016 11:40:37 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Runtime优雅的解决UIButton多次点击(重复点击)</title>
+        <description>&lt;p&gt;　在实际开发中我们，点击一个button按键时，需要触发一个事件去执行。用户在正常操作情况下，单次点击时，button只会响应一次点击。但是如果用户多次点击一个button，那么就会引起这个事件被多次执行，导致一些bug的出现。
+如何优雅解决的这个问题呢？今天我们来使用Runtime来解决UIButton重复点击的问题。
+　首先新建一个分类category，继承于UIControl,名字自己定义。
+　UIControl+ZHW.h(.h文件)&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIControl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;ZHW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSTimeInterval&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//添加点击事件的间隔时间
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//是否忽略点击事件,不响应点击事件
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;　UIControl+ZHW.m(.m文件)在使用runtime时，需要导入相应的库（objc/runtime.h）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIControl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;ZHW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIControl_acceptEventInterval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;UIControl_acceptEventInterval&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIcontrol_ignoreEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;UIcontrol_ignoreEvent&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSTimeInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objc_getAssociatedObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIControl_acceptEventInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doubleValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZhw_acceptEventInterval&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSTimeInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;objc_setAssociatedObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIControl_acceptEventInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OBJC_ASSOCIATION_RETAIN_NONATOMIC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objc_getAssociatedObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIcontrol_ignoreEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;boolValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZhw_ignoreEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;objc_setAssociatedObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIcontrol_ignoreEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OBJC_ASSOCIATION_RETAIN_NONATOMIC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_getInstanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;@selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_getInstanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;@selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__zhw_sendAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;method_exchangeImplementations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__zhw_sendAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SEL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;performSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setZhw_ignoreEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;withObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;afterDelay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__zhw_sendAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;　在需要用到地方导入UIControl+ZHW.h头文件设置button的点击时间间隔&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IBOutlet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_ignoreEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zhw_acceptEventInterval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IBAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;runtimeAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;----run click&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;animateWithDuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;animations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finished&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;95&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;85&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        
+    &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IBAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;------comm click&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;animateWithDuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;animations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finished&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;95&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;85&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        
+    &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;　运行demo,可以发现button多次点击的问题得到了解决。在设置button的相应点击事件的时间间隔，在这个 间隔时间内，button只会响应一次点击事件。
+　附上demo：&lt;a href=&quot;https://github.com/hnxyzhw/UIButtonMutablieClick.git&quot;&gt;UIButtonMutablieClick&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 03 Aug 2016 16:22:45 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Xcode开发使用小技巧</title>
+        <description>&lt;p&gt;&lt;strong&gt;1.快速打开&lt;/strong&gt;
+快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-fcce8108712ab0d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图1.png&quot; /&gt;
+&lt;strong&gt;2.显示项目导航器&lt;/strong&gt;
+在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Project Navigator） 可以为你节省很多时间，这个命令可以在界面左侧的项目导航栏中显示当前文件，默认快捷是Command + Shift + J.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3.辅助编辑器&lt;/strong&gt;
+你可能对辅助编辑器已经很熟悉了。但很多开发者对其使用的却不够充分，它可以显示一个文件的副本或者同时在用户界面和视窗控制器里操作，这一点非常赞。
+辅助编辑器有很多种用法，我经常用它来找出某个特定算法都在哪里出现和被怎样的调用过. 把光标移动到一个算法的主体，从辅助编辑器的顶部菜单中选择Callers就可以看到。
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-da9798e6f376c520.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图3.jpg&quot; /&gt;
+&lt;strong&gt;4.跳转到方法&lt;/strong&gt;
+在使用类或者结构时，我经常需要快速的跳转到类的某个特定方法。通过快捷键Control + 6 再输入算法的头几个字母就可以非常方便的做到这点。
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-bf2991fe9c75743c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图4.png&quot; /&gt;
+&lt;strong&gt;5.浏览文档&lt;/strong&gt;
+不管你多有经验，说明文档总是开发者最好的朋友。按住Option键并点击你感兴趣的符号，就可以快速的打开Xcode的文档浏览器，在这里可以搜索某个特定类或者方法。
+在这里向各位推荐Dash 文档浏览器，它比Xcdoe内建的文档浏览器更快更强大。为了能在Dash上实现上述相同的效果，你需要安装一个&lt;a href=&quot;https://github.com/omz/Dash-Plugin-for-Xcode&quot;&gt;Xcode 插件&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;6.范围编辑&lt;/strong&gt;
+多光标是个很棒的并且每个高级的编辑器都该有的特性。Xcode的代码编辑也有这个功能，但很难找到并且难以使用。在Xcode中，该功能被称为范围编辑（Edit All in Scope，默认快捷键Ctrl+Command+E）。
+将光标移动到要编辑的符号，鼠标指针在字符上停留一两秒就会在字符右边出现一个小小的倒三角，点击那个三角并从菜单中选择Edit All in Scope，你也可以自己给这个命令设定一个快捷键。（修改方法： Preferences -&amp;gt; Key Bindings -&amp;gt; 搜索 “Edit all in scope”）
+可惜的是，Xcode对多光标功能的实现不如 &lt;a href=&quot;https://atom.io/&quot;&gt;Atom&lt;/a&gt; 或者 &lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime Text&lt;/a&gt; 来的强大，据我所知，Xcode的多光标功能只对符号起作用。
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-5b51257141a1e905.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图6.png&quot; /&gt;
+&lt;strong&gt;7.谁是饭桶&lt;/strong&gt;
+你是在一个团队里工作么？你是否遇到过需要或者就是很想知道到底是谁编写了那行可怕的错误代码呢？把光标移动到出错的那一行，单击右键选择然后在菜单里选择Show Blame for Line。
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-f38a9e77b4fdaad7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图7.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;原文链接：&lt;a href=&quot;http://www.cocoachina.com/ios/20160304/15558.html&quot;&gt;原文&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;展开/隐藏 代码的快捷键:&lt;/strong&gt;
+command + option + &amp;lt;— （隐藏）
+command + option +  —&amp;gt;（展开）
+&lt;strong&gt;全局修改局部变量快捷键:&lt;/strong&gt;
+command + control + e
+&lt;strong&gt;storyboard中快速打开对应的控制器:&lt;/strong&gt;
+command + option + enter
+拓展链接：&lt;a href=&quot;http://www.cocoachina.com/ios/20160822/17393.html&quot;&gt;Xcode常用快捷键&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 20 Jun 2016 13:10:04 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS用ASIHttpRequest上传图片文件</title>
+        <description>&lt;p&gt;在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。
+#import &amp;lt;UIKit/UIKit.h&amp;gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#import &quot;ASIHTTPRequest.h&quot;  
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#import &quot;ASIFormDataRequest.h&quot;  
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIViewController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASIHTTPRequestDelegate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
+
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_auth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
+
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;-(void)viewDidLoad {
+        [super viewDidLoad];&lt;br /&gt;
+        UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];&lt;br /&gt;
+        loginBtn.frame = CGRectMake(100, 20, 120, 40);&lt;br /&gt;
+        [loginBtn setTitle:@”登录” forState:UIControlStateNormal];&lt;br /&gt;
+        [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];&lt;br /&gt;
+        [self.view addSubview:loginBtn];      &lt;br /&gt;
+        UIButton *uploadBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];&lt;br /&gt;
+        uploadBtn.frame = CGRectMake(100, 80, 120, 40);&lt;br /&gt;
+        [uploadBtn setTitle:@”上传” forState:UIControlStateNormal];&lt;br /&gt;
+        [uploadBtn   addTarget:self action:@selector(upload) forControlEvents:UIControlEventTouchUpInside]; &lt;br /&gt;
+        [self.view addSubview:uploadBtn];
+}&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;(void)login {&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSURL *url = [NSURL URLWithString:@&quot;...&quot;];//此处省略请求url  
+
+  //请求  
+
+  ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];  
+
+  request.tag = 10;  
+
+  request.delegate = self;  
+
+  [request startAsynchronous];  
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;}&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;(void)upload {&lt;/p&gt;
+
+        &lt;p&gt;NSURL* url = [NSURL URLWithString:@”…”];//此处省略请求url&lt;/p&gt;
+
+        &lt;p&gt;UIImage* img = [UIImage imageNamed:@”haoyou.png”];&lt;/p&gt;
+
+        &lt;p&gt;NSData* data = UIImagePNGRepresentation(img);&lt;/p&gt;
+
+        &lt;p&gt;//ASIFormDataRequest请求是post请求，可以查看其源码&lt;/p&gt;
+
+        &lt;p&gt;ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:url];&lt;/p&gt;
+
+        &lt;p&gt;request.tag = 20;&lt;/p&gt;
+
+        &lt;p&gt;request.delegate = self;&lt;/p&gt;
+
+        &lt;p&gt;[request setPostValue:self.m_auth forKey:@”m_auth”];&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;//    [request setFile:@”tabbar.png” forKey:@”haoyou”];//如果有路径，上传文件&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [request setData:data  withFileName:@&quot;tmp.png&quot; andContentType:@&quot;image/png&quot; forKey:@&quot;headimage&quot;];  
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;//               数据                文件名,随便起                 文件类型            设置key，要和服务端保持一致&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [request startAsynchronous];  
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;}&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;(void)requestFailed:(ASIHTTPRequest *)request {&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSLog(@&quot;请求失败&quot;);  
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;}&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;(void)requestFinished:(ASIHTTPRequest *)request {&lt;/p&gt;
+
+        &lt;p&gt;if (request.tag == 10) {&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:request.responseData options:0 error:nil];  
+
+  self.m_auth = [dic objectForKey:@&quot;m_auth&quot;];  
+
+  NSLog(@&quot;%@&quot;, self.m_auth);  
+&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+
+        &lt;p&gt;}&lt;/p&gt;
+
+        &lt;p&gt;if (request.tag == 20) {&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSLog(@&quot;%@&quot;, request.responseString);  
+&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+
+        &lt;p&gt;}&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;}&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;//判断图片是不是png格式的文件
+ if (UIImagePNGRepresentation(image)) { 
+      //返回为png图像。 
+    data = UIImagePNGRepresentation(image); 
+}else { 
+    //返回为JPEG图像。 
+    data = UIImageJPEGRepresentation(image, 1.0); 
+}&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 08 Apr 2016 10:12:00 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Hello World - Vno</title>
@@ -17,27 +869,28 @@
 
 &lt;h4 id=&quot;usage&quot;&gt;Usage&lt;/h4&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;$ git clone https://github.com/onevcat/vno-jekyll.git your_site
-$ cd your_site
-$ bundler install
-$ bundler exec jekyll serve
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;git clone https://github.com/onevcat/vno-jekyll.git your_site
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;your_site
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bundler install
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bundler &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;Your site with &lt;code&gt;Vno Jekyll&lt;/code&gt; enabled should be accessible in http://127.0.0.1:4000.&lt;/p&gt;
+&lt;p&gt;Your site with &lt;code class=&quot;highlighter-rouge&quot;&gt;Vno Jekyll&lt;/code&gt; enabled should be accessible in http://127.0.0.1:4000.&lt;/p&gt;
 
 &lt;p&gt;For more information about Jekyll, please visit &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll’s site&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h4 id=&quot;configuration&quot;&gt;Configuration&lt;/h4&gt;
 
-&lt;p&gt;All configuration could be done in &lt;code&gt;_config.yml&lt;/code&gt;. Remember you need to restart to serve the page when after changing the config file. Everything in the config file should be self-explanatory.&lt;/p&gt;
+&lt;p&gt;All configuration could be done in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;. Remember you need to restart to serve the page when after changing the config file. Everything in the config file should be self-explanatory.&lt;/p&gt;
 
 &lt;h4 id=&quot;background-image-and-avatar&quot;&gt;Background image and avatar&lt;/h4&gt;
 
-&lt;p&gt;You could replace the background and avatar image in &lt;code&gt;assets/images&lt;/code&gt; folder to change them.&lt;/p&gt;
+&lt;p&gt;You could replace the background and avatar image in &lt;code class=&quot;highlighter-rouge&quot;&gt;assets/images&lt;/code&gt; folder to change them.&lt;/p&gt;
 
 &lt;h4 id=&quot;sites-using-vno&quot;&gt;Sites using Vno&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://onevcat.com&quot;&gt;My blog&lt;/a&gt; is using &lt;code&gt;Vno Jekyll&lt;/code&gt; as well, you could see how it works in real. There are some other sites using the same theme. You can find them below:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://onevcat.com&quot;&gt;My blog&lt;/a&gt; is using &lt;code class=&quot;highlighter-rouge&quot;&gt;Vno Jekyll&lt;/code&gt; as well, you could see how it works in real. There are some other sites using the same theme. You can find them below:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -65,30 +918,6 @@ $ bundler exec jekyll serve
         <pubDate>Tue, 16 Feb 2016 14:32:24 +0800</pubDate>
         <link>https://hnxyzhw.github.io/2016/02/hello-world-vno/</link>
         <guid isPermaLink="true">https://hnxyzhw.github.io/2016/02/hello-world-vno/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Sample Post</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
-
-&lt;p&gt;To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
-
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def print_hi(name)
-  puts &amp;quot;Hi, #{name}&amp;quot;
-end
-print_hi(&amp;#39;Tom&amp;#39;)
-#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 15 Feb 2016 14:32:24 +0800</pubDate>
-        <link>https://hnxyzhw.github.io/2016/02/sample-post/</link>
-        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/02/sample-post/</guid>
         
         
       </item>

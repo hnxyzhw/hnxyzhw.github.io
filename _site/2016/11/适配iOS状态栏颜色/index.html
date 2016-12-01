@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>适配iOS状态栏颜色</title>
+  <meta name="description" content="Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="适配iOS状态栏颜色">
+  <meta name="twitter:description" content="Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="适配iOS状态栏颜色">
+  <meta property="og:description" content="Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://hnxyzhw.github.io/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/">
+  <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Allen Woody 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Allen Woody logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Allen Woody" class="blog-button">Allen Woody</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不要上来就说:给个代码吧!你应该想想为什么。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://www.jianshu.com/users/ec2765510404/latest_articles" target="_blank">我在简书上创建的有关于iOS开发的技术专辑，欢迎各位前来了解！</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="hnxyzhw blog" class="blog-button">博客列表</a></li>
+                
+                  <li class="navigation__item"><a href="https://github.com/hnxyzhw" target="_blank" title="My Projects">Github项目</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/1823801224" title="@1823801224 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/hnxyzhw" title="@hnxyzhw 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/hnxyzhw" title="@hnxyzhw" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Google Plus -->
+  <li class="navigation__item">
+    <a href="https://plus.google.com/hnxyzhw@gmail.com" rel="author" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google Plus</span>
+    </a>
+  </li>
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:hnxyzhw611@126.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-11-28 09:32:38 +0800" itemprop="datePublished" class="post-meta__date date">2016-11-28</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">适配iOS状态栏颜色</h1>
+  </header>
+
+  <section class="post">
+    <p>Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;Error&gt;: CGContextSaveGState: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable
+&lt;Error&gt;: CGContextRestoreGState: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+</code></pre>
+</div>
+<p>具体原因：设置 app 的状态栏样式的使用了旧的方法。
+之前需要兼容iOS7，iOS8。会在 info.plist 里面的 View controller-based status bar appearance （默认会为 YES）设置为NO，如果不设置的话默认也是YES。</p>
+
+<p>可以调用该方法来改变状态栏目的颜色：
+<code class="highlighter-rouge">[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];</code></p>
+
+<p>但是到了iOS9就会报错警告，虽然不影响程序运行，但作为强迫症的程序猿，这个警告的存在不能忍啊。为了兼容iOS9，需要做以下修改：
+将info.plist 里面的 View controller-based status bar appearance 删除（默认为 YES），或设置为YES。同时需要使用新的方法来设置状态栏目的颜色：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (UIStatusBarStyle)preferredStatusBarStyle;
+- (UIViewController *)childViewControllerForStatusBarStyle;
+- (void)setNeedsStatusBarAppearanceUpdate
+</code></pre>
+</div>
+<p>1：如果我们的rootViewController是ViewController那么只需要在VC中实现以下方法(clean 下或者删除应用程序重新运行)：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//设置状态栏的白色
+ -(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+</code></pre>
+</div>
+<p>2：如果我们的rootViewController是navigationController，按照上边的方法设置你会发现是无法解决问题的。
+我们必须设置 rootViewController，编译器才会去 rootViewController 中重载 preferredStatusBarStyle 方法。此时我们的 rootViewController是当前的navigationController
+在appdelegate里面我们对rootViewController做一下设置：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>self.window.rootViewController = self.navigationController;
+</code></pre>
+</div>
+<p>在对应的VC里我们需要做以下设置：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+</code></pre>
+</div>
+<p>对于navigationController状态栏颜色的修改，我们也可以重新写一个navigationController的分类来实现preferredStatusBarStyle方法的调用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//.h文件
+//  UINavigationController+StatusBarStyle.h
+</span><span class="cp">#import
+</span><span class="err"> </span>
+<span class="k">@interface</span><span class="err"> </span><span class="nc">UINavigationController</span><span class="err"> </span><span class="p">(</span><span class="n">StatusBarStyle</span><span class="p">)</span>
+<span class="err"> </span>
+<span class="k">@end</span>
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// .m文件
+//  UINavigationController+StatusBarStyle.m
+</span><span class="cp">#import "UINavigationController+StatusBarStyle.h"
+</span><span class="err"> </span>
+<span class="k">@implementation</span><span class="err"> </span><span class="nc">UINavigationController</span><span class="err"> </span><span class="p">(</span><span class="n">StatusBarStyle</span><span class="p">)</span>
+<span class="err"> </span>
+<span class="o">-</span><span class="err"> </span><span class="p">(</span><span class="n">UIStatusBarStyle</span><span class="p">)</span><span class="n">preferredStatusBarStyle</span>
+<span class="p">{</span>
+<span class="err">    </span><span class="c1">//also you may add any fancy condition-based code here
+</span><span class="err">    </span><span class="k">return</span><span class="err"> </span><span class="n">UIStatusBarStyleLightContent</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="err"> </span>
+<span class="k">@end</span>
+</code></pre>
+</div>
+<p>通过这个分类就可以自定义我们的状态栏的颜色了。</p>
+
+<p>3：还有就是在初始化登录注册界面时，一些button的背景图没有使用切图。通过颜色值来绘制一张纯色的背景图片。在编译运行时出现一下错误：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;Error&gt;: CGContextSetStrokeColorWithColor: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+&lt;Error&gt;: CGContextSetFillColorWithColor: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+</code></pre>
+</div>
+<p>具体绘图的方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#pragma mark - uicolor - uiimage
+- (UIImage*) createImageWithColor:(UIColor*) color rect:(CGRect)rect{
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+</code></pre>
+</div>
+<p>根据返回的错误问题，可以认为是在初始化的时候有问题。检索了一下类似的问题，得到如下回复：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>**若使用uikit绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate 的ref并且不能用于画图。
+使用UiKit，你只能在当前上下文中绘图，所以如果你当前处于UIGraphicsBeginImageContextWithOptions函数或drawRect：方法中，你就可以直接使用UIKit提供的方法进行绘图。
+如果你持有一个context：参数，那么使用UIKit提供的方法之前，必须将该上下文参数转化为当前上下文。
+幸运的是，调用UIGraphicsPushContext 函数可以方便的将context：参数转化为当前上下文，记住最后别忘了调用UIGraphicsPopContext函数恢复上下文环境。**
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>**使用Core Graphics之前需要指定一个用于绘图的图形上下文（CGContextRef），这个图形上下文会在每个绘图函数中都会被用到。
+如果你持有一个图形上下文context：参数，那么你等同于有了一个图形上下文，这个上下文也许就是你需要用来绘图的那个。
+如果你当前处于UIGraphicsBeginImageContextWithOptions函数或drawRect：方法中，并没有引用一个上下文。为了使用Core Graphics，你可以调用UIGraphicsGetCurrentContext函数获得当前的图形上下文。**
+</code></pre>
+</div>
+
+<p>最后在登陆注册界面，按键的背景色使用了切图。其他地方按键的背景色使用了绘制的方法，统一主题色调，方便修改。</p>
+
+
+  </section>
+</article>
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/11/适配iOS状态栏颜色" data-title="适配iOS状态栏颜色" data-url="http://127.0.0.1:4000//2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"test-comments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/" title="link to iOS自定义debug模式下的NSLog宏输出">iOS自定义debug模式下的NSLog宏输出</a></h2>
+       <p class="excerpt">在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。先介绍一些参数：（1) __VA_ARGS__是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-11-18 08:52:35 +0800" class="post-list__meta--date date">2016-11-18</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "https://hnxyzhw.github.io/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/";
+        this.page.identifier = "/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-12-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

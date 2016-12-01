@@ -152,16 +152,72 @@
   <ol class="post-list">
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/02/hello-world-vno/" title="访问 Hello World - Vno">Hello World - Vno</a></h2>
-      <p class="excerpt">What’s thisVno Jekyll is a theme for Jekyll. It is a port of my Ghost theme vno, which is originally developed from Dale Anthony’s Uno.Usage$ git clone https://github.com/onevcat/vno-jekyll.git your_site$ cd your_site$ bundler install$ bundler exe...&hellip;</p>
-      <div class="post-list__meta"><time datetime="2016-02-16 14:32:24 +0800" class="post-list__meta--date date">2016-02-16</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/02/hello-world-vno/>继续阅读</a></div>
+      <h2 class="post-list__post-title post-title"><a href="/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/" title="访问 适配iOS状态栏颜色">适配iOS状态栏颜色</a></h2>
+      <p class="excerpt">Xcode 升级后，旧的状态栏的样式设置方式会引起警告错误：&lt;Error&gt;: CGContextSaveGState: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable&lt;Error&gt;: CGContextRestoreGState: invalid context 0x0. If you ...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-11-28 09:32:38 +0800" class="post-list__meta--date date">2016-11-28</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/>继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/02/sample-post/" title="访问 Sample Post">Sample Post</a></h2>
-      <p class="excerpt">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-r...&hellip;</p>
-      <div class="post-list__meta"><time datetime="2016-02-15 14:32:24 +0800" class="post-list__meta--date date">2016-02-15</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/02/sample-post/>继续阅读</a></div>
+      <h2 class="post-list__post-title post-title"><a href="/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/" title="访问 iOS自定义debug模式下的NSLog宏输出">iOS自定义debug模式下的NSLog宏输出</a></h2>
+      <p class="excerpt">在debug模式下的时候需要把所在的类名、方法名、行数等相关信息也打印出来，这样在开发的时候就可以快速定位调试的位置，以及当前的调试信息。对于解决bug来说，这是一个非常有效率的方法。同时在发布模式下，我们可以不输出打印这些数据，不会造成冗余数据的产生。先介绍一些参数：（1) __VA_ARGS__是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-11-18 08:52:35 +0800" class="post-list__meta--date date">2016-11-18</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/11/iOS%E8%87%AA%E5%AE%9A%E4%B9%89debug%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84NSLog%E5%AE%8F%E8%BE%93%E5%87%BA/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/" title="访问 title和leftBarButtonItem不显示">title和leftBarButtonItem不显示</a></h2>
+      <p class="excerpt">之前自定义了navigationBar的背景颜色，升级到iOS10后，发现title,跟leftBarButtonItem不显示。iOS9 之前的navigationBar的背景是_UINavigationBarBackground，到iOS变成了_UIBarBackground，可以通过xcode查看一下相应的布局。我的解决办法是，分别判断iOS10，iOS9的版本，找到对应的背景图，将起隐藏掉，可以消除分割线。然后重新创建一个视图层，颜色可以自定义，需要注意在添加视图或者更新视图时要放...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-09-19 18:41:07 +0800" class="post-list__meta--date date">2016-09-19</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/09/iOS10-title%E5%92%8CleftBarButtonItem%E4%B8%8D%E6%98%BE%E7%A4%BA/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/" title="访问 iOS中NSString的strong、copy的使用">iOS中NSString的strong、copy的使用</a></h2>
+      <p class="excerpt">       iOS开发中关于内存的管理有两种，一种是基于ARC(Automatic Reference Counting)环境下的，另一种是MRC(Mannul Reference Counting)。这两种模式可以在工程中的Build Settings选项下设置，可参照下图所示：**       说明：设置为Yes是ARC环境下，设置为NO是MRC环境下。**       进入正题，我们在声明一个NSString类型的属性时，会遇到这样的一个问题。就是应该使用strong呢？还是应该用...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-08-30 15:15:34 +0800" class="post-list__meta--date date">2016-08-30</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/iOS%E4%B8%ADNSString%E7%9A%84strong-copy%E7%9A%84%E4%BD%BF%E7%94%A8/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/" title="访问 简单排序算法(OC实现)">简单排序算法(OC实现)</a></h2>
+      <p class="excerpt">排序的目的，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。我们子啊开发过程，从后台拿到的数据有可能是无序列，这就要我们运用一些排序算法，对这些数据进行二次排序。********下面就介绍三种简单排序：//属性@interface ViewController ()@property (weak, nonatomic) IBOutlet UIButton *selectSortBtn;//选择排序@property...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-08-11 09:32:04 +0800" class="post-list__meta--date date">2016-08-11</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95(OC%E5%AE%9E%E7%8E%B0)/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="访问 ios8-横屏状态栏不显示解决方法">ios8-横屏状态栏不显示解决方法</a></h2>
+      <p class="excerpt">开发过程中发现ios8下横屏状态栏不显示Tips：解决这个问题，需要我们按照以下步骤操作1：在plist文件中将 View controller-based status bar appearance 设置为NO2：还需要application:didFinishLaunchingWithOptions:中添加以下下面代码(下面的两段代码必不可少)**[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimatio...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-08-08 11:40:37 +0800" class="post-list__meta--date date">2016-08-08</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/" title="访问 Runtime优雅的解决UIButton多次点击(重复点击)">Runtime优雅的解决UIButton多次点击(重复点击)</a></h2>
+      <p class="excerpt">　在实际开发中我们，点击一个button按键时，需要触发一个事件去执行。用户在正常操作情况下，单次点击时，button只会响应一次点击。但是如果用户多次点击一个button，那么就会引起这个事件被多次执行，导致一些bug的出现。如何优雅解决的这个问题呢？今天我们来使用Runtime来解决UIButton重复点击的问题。　首先新建一个分类category，继承于UIControl,名字自己定义。　UIControl+ZHW.h(.h文件)@interface UIControl (ZHW)@...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-08-03 16:22:45 +0800" class="post-list__meta--date date">2016-08-03</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="访问 Xcode开发使用小技巧">Xcode开发使用小技巧</a></h2>
+      <p class="excerpt">1.快速打开快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。2.显示项目导航器在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Project Navigator） 可以为你节省很多时间，这个命令可以在界面左侧的项目导航栏中显示当前文件，默认快捷是Command + Shift + J.3.辅助编辑器你可能对辅助编辑...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-06-20 13:10:04 +0800" class="post-list__meta--date date">2016-06-20</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/" title="访问 iOS用ASIHttpRequest上传图片文件">iOS用ASIHttpRequest上传图片文件</a></h2>
+      <p class="excerpt">在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。#import &lt;UIKit/UIKit.h&gt;#import "ASIHTTPRequest.h"  #import "ASIFormDataRequest.h"  @interface ViewController : UI...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-04-08 10:12:00 +0800" class="post-list__meta--date date">2016-04-08</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/>继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/02/hello-world-vno/" title="访问 Hello World - Vno">Hello World - Vno</a></h2>
+      <p class="excerpt">What’s thisVno Jekyll is a theme for Jekyll. It is a port of my Ghost theme vno, which is originally developed from Dale Anthony’s Uno.Usage$ git clone https://github.com/onevcat/vno-jekyll.git your_site$ cd your_site$ bundler install$ bundler exe...&hellip;</p>
+      <div class="post-list__meta"><time datetime="2016-02-16 14:32:24 +0800" class="post-list__meta--date date">2016-02-16</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/02/hello-world-vno/>继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
     
@@ -171,7 +227,9 @@
 
 <nav class="pagination" role="navigation">
     
-    <span class="pagination__page-number">1 / 1</span>
+    <span class="pagination__page-number">1 / 2</span>
+    
+        <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/page/2/#blog">更早 &rarr;</a>
     
 </nav>
 
@@ -181,7 +239,7 @@
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-11-30 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-12-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
     </footer>
 </section>
