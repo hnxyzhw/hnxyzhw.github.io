@@ -13,7 +13,7 @@ permalink: /:year/:month/:title/
 highlighter: rouge
 
 # supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
-cover_color: 
+cover_color:
 
 # The blog button should not be removed.
 blog_button:
@@ -32,7 +32,7 @@ paginate_path: "page/:num/"
 
 # Comment
 comment:
-    disqus: vno-jekyll
+    #disqus: vno-jekyll
     # duoshuo:
 
 # Social
@@ -47,3 +47,8 @@ social:
 ga:
     # id: your_ga_id
     # host: your_host
+
+# baidu Analytics
+#net id c6517882a40cbb96ac696d225b3ff9ba
+#local id e60ccc7665536086843eaccf6f72fc72
+baidu-analysis: c6517882a40cbb96ac696d225b3ff9ba

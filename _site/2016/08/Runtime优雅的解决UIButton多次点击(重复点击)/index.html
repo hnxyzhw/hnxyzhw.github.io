@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
 
   <head>
   <meta charset="utf-8">
@@ -13,22 +22,21 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Runtime优雅的解决UIButton多次点击(重复点击)">
   <meta name="twitter:description" content="　在实际开发中我们，点击一个button按键时，需要触发一个事件去执行。用户在正常操作情况下，单次点击时，button只会响应一次点击。但是如果用户多次点击一个button，那么就会引起这个事件被多次执行，导致一些bug的出现。如何优雅解决的这个问题呢？今天我们来使用Runtime来解决UIButton重复点击的...">
-  
+
   <meta property="og:type" content="article">
   <meta property="og:title" content="Runtime优雅的解决UIButton多次点击(重复点击)">
   <meta property="og:description" content="　在实际开发中我们，点击一个button按键时，需要触发一个事件去执行。用户在正常操作情况下，单次点击时，button只会响应一次点击。但是如果用户多次点击一个button，那么就会引起这个事件被多次执行，导致一些bug的出现。如何优雅解决的这个问题呢？今天我们来使用Runtime来解决UIButton重复点击的...">
-  
+
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
   <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
-  
+
   <link rel="stylesheet" href="/css/main.css">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
   <link rel="canonical" href="https://hnxyzhw.github.io/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/">
   <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
-  
+
   <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
-  
 </head>
 
 
@@ -38,7 +46,7 @@
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
     </span>
-    
+
     <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
   <div class="panel-main">
 
@@ -147,7 +155,8 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+            #文章内容
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <div class="post-meta">
       <time datetime="2016-08-03 16:22:45 +0800" itemprop="datePublished" class="post-meta__date date">2016-08-03</time> &#8226; <span class="post-meta__tags tags"></span>
@@ -276,12 +285,46 @@
   </section>
 </article>
 
+<!-- 多说分享 -->
+<div class="ds-share" data-thread-key="/2016/08/Runtime优雅的解决UIButton多次点击(重复点击)" data-title="Runtime优雅的解决UIButton多次点击(重复点击)" data-images="http://a.cphotos.bdimg.com/timg?image&quality=100&size=b4000_4000&sec=1480578965&di=ca3ca1b345cfc3b09716dd2bcfe26c79&src=http://pic.58pic.com/58pic/15/56/29/39V58PICPti_1024.png" data-content="Runtime优雅的解决UIButton多次点击(重复点击)" data-url="http://hnxyzhw.xyz//2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/2016/08/Runtime优雅的解决UIButton多次点击(重复点击)" data-title="Runtime优雅的解决UIButton多次点击(重复点击)" data-url="http://127.0.0.1:4000//2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/"></div>
+	<!-- <div class="ds-thread" data-thread-key="/2016/08/Runtime优雅的解决UIButton多次点击(重复点击)" data-title="Runtime优雅的解决UIButton多次点击(重复点击)" data-url="http://127.0.0.1:4000//2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/"></div> -->
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- <script type="text/javascript">
+var duoshuoQuery = {short_name:"test-comments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script> -->
+<!-- 多说公共JS代码 end -->
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/08/Runtime优雅的解决UIButton多次点击(重复点击)" data-title="Runtime优雅的解决UIButton多次点击(重复点击)" data-url="http://hnxyzhw.xyz//2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
-var duoshuoQuery = {short_name:"test-comments"};
+var duoshuoQuery = {short_name:"articlecomments"};
 	(function() {
 		var ds = document.createElement('script');
 		ds.type = 'text/javascript';ds.async = true;
@@ -297,17 +340,17 @@ var duoshuoQuery = {short_name:"test-comments"};
    
    
    <div class="read-more-item">
-       <span class="read-more-item-dim">最近的文章</span>
+       <span class="read-more-item-dim">上一篇文章</span>
        <h2 class="post-list__post-title post-title"><a href="/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="link to ios8-横屏状态栏不显示解决方法">ios8-横屏状态栏不显示解决方法</a></h2>
        <p class="excerpt">开发过程中发现ios8下横屏状态栏不显示Tips：解决这个问题，需要我们按照以下步骤操作1：在plist文件中将 View controller-based status bar appearance 设置为NO2：还需要application:didFinishLaunchingWithOptions:中添加以下下面代码(下面的两段代码必不可少)**[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimatio...&hellip;</p>
        <div class="post-list__meta"><time datetime="2016-08-08 11:40:37 +0800" class="post-list__meta--date date">2016-08-08</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/08/ios8-%E6%A8%AA%E5%B1%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/>继续阅读</a></div>
    </div>
    
-   
+
    
    
    <div class="read-more-item">
-       <span class="read-more-item-dim">更早的文章</span>
+       <span class="read-more-item-dim">下一篇文章</span>
        <h2 class="post-list__post-title post-title"><a href="/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="link to Xcode开发使用小技巧">Xcode开发使用小技巧</a></h2>
        <p class="excerpt">1.快速打开快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。2.显示项目导航器在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Project Navigator） 可以为你节省很多时间，这个命令可以在界面左侧的项目导航栏中显示当前文件，默认快捷是Command + Shift + J.3.辅助编辑器你可能对辅助编辑...&hellip;</p>
        <div class="post-list__meta"><time datetime="2016-06-20 13:10:04 +0800" class="post-list__meta--date date">2016-06-20</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/>继续阅读</a></div>
@@ -316,26 +359,6 @@ var duoshuoQuery = {short_name:"test-comments"};
 </section>
 
 <section class="post-comments">
-  
-    <div id="disqus_thread"></div>
-    <script>
-    
-    var disqus_config = function () {
-        this.page.url = "https://hnxyzhw.github.io/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/";
-        this.page.identifier = "/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/";
-    };
-
-    var disqus_shortname = 'vno-jekyll';
-    
-    (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
-    
   
   
   
@@ -347,13 +370,13 @@ var duoshuoQuery = {short_name:"test-comments"};
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
         <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-12-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
-        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/hnxyzhw">本站源码</a> - &copy; 2016</span>
     </footer>
 </section>
 
         </div>
     </div>
-    
+
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <script type="text/javascript" src="/js/highlight.pack.js"></script>
@@ -363,7 +386,7 @@ var duoshuoQuery = {short_name:"test-comments"};
 
 
 
-    
+
   </body>
 
 </html>
