@@ -5,9 +5,91 @@
     <description>嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</description>
     <link>https://hnxyzhw.github.io/</link>
     <atom:link href="https://hnxyzhw.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 01 Dec 2016 17:22:11 +0800</pubDate>
-    <lastBuildDate>Thu, 01 Dec 2016 17:22:11 +0800</lastBuildDate>
+    <pubDate>Fri, 17 Feb 2017 15:31:23 +0800</pubDate>
+    <lastBuildDate>Fri, 17 Feb 2017 15:31:23 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>app审核中遇到的问题03（涉及到金融类的需要用企业级别的账号申请上架）</title>
+        <description>&lt;p&gt;2017年2月17日 上午2:54
+发件人 Apple
+	•	2. 3 PERFORMANCE: ACCURATE METADATA 
+	•	0. 10.0 BEFORE YOU SUBMIT: PROGRAM LICENSE AGREEMENT&lt;/p&gt;
+
+&lt;p&gt;Performance - 2.3.7&lt;/p&gt;
+
+&lt;p&gt;Your app name to be displayed on the App Store includes keywords or descriptors, which are not appropriate for use in an app name.&lt;/p&gt;
+
+&lt;p&gt;Specifically, the following words in your app name are considered keywords or descriptors:&lt;/p&gt;
+
+&lt;p&gt;贷款、借款、网银管理、顾问&lt;/p&gt;
+
+&lt;p&gt;Next Steps&lt;/p&gt;
+
+&lt;p&gt;Please revise your app name to remove any keywords and descriptors from all localizations of your app. Keywords can be entered in the Keywords field in iTunes Connect to be used as search terms for your app.&lt;/p&gt;
+
+&lt;p&gt;Please also remember to re-evaluate your app name title to ensure it’s 50 characters or less.&lt;/p&gt;
+
+&lt;p&gt;Resources&lt;/p&gt;
+
+&lt;p&gt;For information on how to revise your app name, please see &lt;a href=&quot;http://help.apple.com/xcode/mac/8.2/#/dev3db3afe4f&quot;&gt;Renaming a Project or App&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For information on changing the app name and other metadata in iTunes Connect, please see the section “Viewing and Changing Your App’s Metadata” in the &lt;a href=&quot;https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/About.html&quot;&gt;iTunes Connect Developer Guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;PLA 1.2&lt;/p&gt;
+
+&lt;p&gt;The Seller and Artist names associated with your app do not reflect the name of the financial institution(s) or loan provider(s) in the app or its metadata, as required by section 1.2 of the Apple Developer Program License Agreement. Next Steps Your app must be published under a Seller name and Artist name that reflects the financial institution(s) or loan provider(s)  brand. If you have developed these apps on behalf of a client, please advise your client to add you to the development team of their Apple Developer account. The Artist name is the Company name in iTunes Connect. For information on how to address this issue, please contact iTunes Connect Contact Us.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://a1618.phobos.apple.com/us/r30/Purple122/v4/dc/47/f6/dc47f682-00aa-ffab-0704-a96e5f502d4b/attachment-9184204356495002063Screenshot-0216-105342.png?downloadKey3=1487497979_3be2cc0863c88f61c5474dca0321a00f&quot;&gt;Screenshot-0216-105342.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://a1078.phobos.apple.com/us/r30/Purple111/v4/7f/ee/fe/7feefe09-beae-c63f-94d4-fd0761f860e9/attachment-4518752275153205965Screenshot-0216-105204.png?downloadKey3=1487497979_d6c48e5627a5cecaaceb7086b2b30da9&quot;&gt;Screenshot-0216-105204.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://a1664.phobos.apple.com/us/r30/Purple111/v4/b3/4e/eb/b34eeb4a-a328-3419-470e-714ee4ccff95/attachment-463550308834771403Screenshot-0216-105314.png?downloadKey3=1487497979_daaef5524cb609e8e7c677ffce2a06fc&quot;&gt;Screenshot-0216-105314.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://a858.phobos.apple.com/us/r30/Purple122/v4/d7/7d/a8/d77da821-018b-f6c0-2d15-949ea0f9a487/attachment-930135373867405000Screenshot-0216-105322.png?downloadKey3=1487497979_c7af3fe3f3109959b366dea8b120e9b0&quot;&gt;Screenshot-0216-105322.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://a1.phobos.apple.com/us/r30/Purple111/v4/b7/fd/58/b7fd5806-3ef0-1fc0-a3e0-66d17256efb6/attachment-3598297107114342811Screenshot-0216-105337.png?downloadKey3=1487497979_0577e0c8103248c11880e6bdb1f0ccb7&quot;&gt;Screenshot-0216-105337.png &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;//百度翻译&lt;/p&gt;
+
+&lt;p&gt;Performance - 2.3.7&lt;/p&gt;
+
+&lt;p&gt;应用程序商店上要显示的应用程序名称包括关键字或描述符，不适合在应用程序名称中使用。&lt;/p&gt;
+
+&lt;p&gt;具体来说，在你的应用程序名称下面的单词被认为是关键字或描述符：&lt;/p&gt;
+
+&lt;p&gt;贷款、借款、网银管理、顾问&lt;/p&gt;
+
+&lt;p&gt;接下来的步骤&lt;/p&gt;
+
+&lt;p&gt;请修改您的应用程序的名称从所有局限你的应用程序中删除任何关键词和描述。关键词可输入关键字字段在iTunes Connect作为你的应用程序的搜索条件。&lt;/p&gt;
+
+&lt;p&gt;请记住重新评估您的应用程序名称的标题，以确保它的50个字符或更少。&lt;/p&gt;
+
+&lt;p&gt;资源&lt;/p&gt;
+
+&lt;p&gt;有关如何修改您的应用程序的名称，请参阅重命名项目或应用程序。&lt;/p&gt;
+
+&lt;p&gt;为改变在iTunes应用程序名称和其他元数据连接的信息，请参见“查看和更改您的应用程序的元数据在iTunes Connect开发者指南。&lt;/p&gt;
+
+&lt;p&gt;PLA 1.2&lt;/p&gt;
+
+&lt;p&gt;与您的应用程序相关联的卖方和艺术家名称不反映在应用程序或其元数据的金融机构或贷款提供商的名称，如由苹果开发者计划许可协议第1.2节所要求的。下一步您的应用程序必须在卖方名称和艺术家的名字，反映了金融机构（或）贷款提供商。如果您已经开发了这些应用程序代表一个客户，请告知您的客户添加您的开发团队，他们的苹果开发者帐户。艺术家的名字是公司的名字在iTunes Connect。关于如何解决这个问题，请联系iTunes Connect联系我们。&lt;/p&gt;
+
+&lt;p&gt;个人理解：
+第一个问题是关键字的问题，app的名字后边不能追加太多关键字跟描述。删除掉对应的关键字就可以了。
+第二个问题是说app属于金融类的应用，app里面没有反应出开发者的名字和贷款公司名字有关联或者关系。
+并且金融类的应用，只能使用公司账号发布。&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 17 Feb 2017 13:56:00 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2017/02/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9803(%E6%B6%89%E5%8F%8A%E5%88%B0%E9%87%91%E8%9E%8D%E7%B1%BB%E7%9A%84%E9%9C%80%E8%A6%81%E7%94%A8%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%AB%E7%9A%84%E8%B4%A6%E5%8F%B7%E7%94%B3%E8%AF%B7%E4%B8%8A%E6%9E%B6)/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2017/02/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9803(%E6%B6%89%E5%8F%8A%E5%88%B0%E9%87%91%E8%9E%8D%E7%B1%BB%E7%9A%84%E9%9C%80%E8%A6%81%E7%94%A8%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%AB%E7%9A%84%E8%B4%A6%E5%8F%B7%E7%94%B3%E8%AF%B7%E4%B8%8A%E6%9E%B6)/</guid>
+        
+        <category>iOS,AppleStore</category>
+        
+        
+      </item>
     
       <item>
         <title>适配iOS状态栏颜色</title>
@@ -121,6 +203,91 @@
         <pubDate>Mon, 28 Nov 2016 09:32:38 +0800</pubDate>
         <link>https://hnxyzhw.github.io/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/</link>
         <guid isPermaLink="true">https://hnxyzhw.github.io/2016/11/%E9%80%82%E9%85%8DiOS%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>app审核中遇到的问题02（应用内虚拟金币购买应用内商品被拒）</title>
+        <description>&lt;p&gt;2016年11月24日 上午11:50
+发件人 Apple
+	•	3. 1.1 BUSINESS: PAYMENTS - IN-APP PURCHASE 
+Business - 3.1.1&lt;/p&gt;
+
+&lt;p&gt;We noticed that your app enables the purchase of content, services, or functionality in the app by means other than the In-App Purchase API, which is not allowed on the App Store.&lt;/p&gt;
+
+&lt;p&gt;Next Steps&lt;/p&gt;
+
+&lt;p&gt;While the payment system that you have included may conduct the transaction outside of the app, if the purchasable content, functionality, or services are intended to be used in the app, they must be purchased through IAP, within the app - unless it is of the type referenced in Guideline 3.1.3.&lt;/p&gt;
+
+&lt;p&gt;In-App Purchase&lt;/p&gt;
+
+&lt;p&gt;It may be appropriate to revise your app to use the In-App Purchase API to provide content purchasing functionality.&lt;/p&gt;
+
+&lt;p&gt;In-App Purchase provides several benefits, including:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The flexibility to support a variety of business models.&lt;/li&gt;
+  &lt;li&gt;Impacting your app ranking by consolidating your sales to one app rather than distributing them across multiple apps.&lt;/li&gt;
+  &lt;li&gt;An effective marketing vehicle to drive additional sales of new content.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For information on In-App Purchase, please refer to the following documentation:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/in-app-purchase/&quot;&gt;In-App Purchase for Developers&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Introduction.html&quot;&gt;In-App Purchase Programming Guide&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For step-by-step instructions on In-App Purchase creation within iTunes Connect, refer to &lt;a href=&quot;https://developer.apple.com/in-app-purchase/&quot;&gt;In-App Purchase for Developers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://a1813.phobos.apple.com/us/r30/Purple71/v4/e9/a1/09/e9a1095f-bff6-23fc-af75-4c8be7b4885f/attachment-8754101452909378077Screenshot_1123_194831.png?downloadKey3=1484756730_08a42874f2c5dc2c42e9435761bd7bfa&quot;&gt;Screenshot 1123 194831.png&lt;/a&gt; 
+&lt;a href=&quot;http://a1882.phobos.apple.com/us/r30/Purple71/v4/df/25/8a/df258a1e-a374-0ff2-2683-8c59fd1dfb7d/attachment-5903931363629314691Screenshot_1123_194844.png?downloadKey3=1484756730_3b147b756adf287544f2fc95e4c287d6&quot;&gt;Screenshot 1123 194844.png&lt;/a&gt; 
+&lt;a href=&quot;http://a1255.phobos.apple.com/us/r30/Purple71/v4/79/08/a4/7908a467-56c5-e8bc-e12f-f1d435f022f1/attachment-773458648075770258Screenshot_1123_194819.png?downloadKey3=1484756730_1fbbf8998892d11b2026410e411f88ea&quot;&gt;Screenshot 1123 194819.png&lt;/a&gt; 
+&lt;a href=&quot;http://a873.phobos.apple.com/us/r30/Purple71/v4/6d/03/16/6d031677-eb84-958b-bb3f-ad0e9efdc6ab/attachment-2204651524833162591Screenshot_1123_194837.png?downloadKey3=1484756730_1aa8c991be6c97e3305001247bec278d&quot;&gt;Screenshot 1123 194837.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;个人理解：
+对用应用内有虚拟货币交易类型的app，是必须要走苹果内购进行充值，支付的。不然的话是不给审核通过的。（提醒：对于那些想通过后台开关控制交易充值的显示的，如果被审查到会被下架，严重的可能账号都被封掉）&lt;/p&gt;
+</description>
+        <pubDate>Thu, 24 Nov 2016 10:50:00 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/11/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9802(%E5%BA%94%E7%94%A8%E5%86%85%E8%99%9A%E6%8B%9F%E9%87%91%E5%B8%81%E8%B4%AD%E4%B9%B0%E5%BA%94%E7%94%A8%E5%86%85%E5%95%86%E5%93%81%E8%A2%AB%E6%8B%92)/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/11/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9802(%E5%BA%94%E7%94%A8%E5%86%85%E8%99%9A%E6%8B%9F%E9%87%91%E5%B8%81%E8%B4%AD%E4%B9%B0%E5%BA%94%E7%94%A8%E5%86%85%E5%95%86%E5%93%81%E8%A2%AB%E6%8B%92)/</guid>
+        
+        <category>iOS,AppleStore</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>app审核中遇到的问题01（关键字被拒）</title>
+        <description>&lt;p&gt;2016年11月24日 上午8:07
+发件人 Apple&lt;/p&gt;
+
+&lt;p&gt;2.3 PERFORMANCE: ACCURATE METADATA&lt;/p&gt;
+
+&lt;p&gt;Performance - 2.3.7&lt;/p&gt;
+
+&lt;p&gt;Your app name to be displayed on the App Store includes keywords or descriptors, which are not appropriate for use in an app name.&lt;/p&gt;
+
+&lt;p&gt;Specifically, the following words in your app name are considered keywords or descriptors:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;“信贷经理的贷款、办信用卡、公积金、花呗、学生贷抢单神器”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Next Steps&lt;/p&gt;
+
+&lt;p&gt;Please revise your app name to remove any keywords and descriptors from all localizations of your app. Keywords can be entered in the Keywords field in iTunes Connect to be used as search terms for your app.&lt;/p&gt;
+
+&lt;p&gt;Resources&lt;/p&gt;
+
+&lt;p&gt;For information on how to revise your app name, please see &lt;a href=&quot;http://help.apple.com/xcode/mac/8.2/#/dev3db3afe4f&quot;&gt;Renaming a Project or App&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For information on changing the app name and other metadata in iTunes Connect, please see the section “Viewing and Changing Your App’s Metadata” in the &lt;a href=&quot;https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/About.html&quot;&gt;iTunes Connect Developer Guide&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 24 Nov 2016 07:07:00 +0800</pubDate>
+        <link>https://hnxyzhw.github.io/2016/11/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9801(%E5%85%B3%E9%94%AE%E5%AD%97%E8%A2%AB%E6%8B%92)/</link>
+        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/11/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9801(%E5%85%B3%E9%94%AE%E5%AD%97%E8%A2%AB%E6%8B%92)/</guid>
+        
+        <category>iOS,AppleStore</category>
         
         
       </item>
@@ -667,257 +834,6 @@ iOSCopyAndStrong[1076:1312388] the copy string:0xa00000000534f693, 0x7fb0a2c5505
         <pubDate>Wed, 03 Aug 2016 16:22:45 +0800</pubDate>
         <link>https://hnxyzhw.github.io/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/</link>
         <guid isPermaLink="true">https://hnxyzhw.github.io/2016/08/Runtime%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3UIButton%E5%A4%9A%E6%AC%A1%E7%82%B9%E5%87%BB(%E9%87%8D%E5%A4%8D%E7%82%B9%E5%87%BB)/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Xcode开发使用小技巧</title>
-        <description>&lt;p&gt;&lt;strong&gt;1.快速打开&lt;/strong&gt;
-快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。
-&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-fcce8108712ab0d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图1.png&quot; /&gt;
-&lt;strong&gt;2.显示项目导航器&lt;/strong&gt;
-在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Project Navigator） 可以为你节省很多时间，这个命令可以在界面左侧的项目导航栏中显示当前文件，默认快捷是Command + Shift + J.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;3.辅助编辑器&lt;/strong&gt;
-你可能对辅助编辑器已经很熟悉了。但很多开发者对其使用的却不够充分，它可以显示一个文件的副本或者同时在用户界面和视窗控制器里操作，这一点非常赞。
-辅助编辑器有很多种用法，我经常用它来找出某个特定算法都在哪里出现和被怎样的调用过. 把光标移动到一个算法的主体，从辅助编辑器的顶部菜单中选择Callers就可以看到。
-&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-da9798e6f376c520.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图3.jpg&quot; /&gt;
-&lt;strong&gt;4.跳转到方法&lt;/strong&gt;
-在使用类或者结构时，我经常需要快速的跳转到类的某个特定方法。通过快捷键Control + 6 再输入算法的头几个字母就可以非常方便的做到这点。
-&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-bf2991fe9c75743c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图4.png&quot; /&gt;
-&lt;strong&gt;5.浏览文档&lt;/strong&gt;
-不管你多有经验，说明文档总是开发者最好的朋友。按住Option键并点击你感兴趣的符号，就可以快速的打开Xcode的文档浏览器，在这里可以搜索某个特定类或者方法。
-在这里向各位推荐Dash 文档浏览器，它比Xcdoe内建的文档浏览器更快更强大。为了能在Dash上实现上述相同的效果，你需要安装一个&lt;a href=&quot;https://github.com/omz/Dash-Plugin-for-Xcode&quot;&gt;Xcode 插件&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;6.范围编辑&lt;/strong&gt;
-多光标是个很棒的并且每个高级的编辑器都该有的特性。Xcode的代码编辑也有这个功能，但很难找到并且难以使用。在Xcode中，该功能被称为范围编辑（Edit All in Scope，默认快捷键Ctrl+Command+E）。
-将光标移动到要编辑的符号，鼠标指针在字符上停留一两秒就会在字符右边出现一个小小的倒三角，点击那个三角并从菜单中选择Edit All in Scope，你也可以自己给这个命令设定一个快捷键。（修改方法： Preferences -&amp;gt; Key Bindings -&amp;gt; 搜索 “Edit all in scope”）
-可惜的是，Xcode对多光标功能的实现不如 &lt;a href=&quot;https://atom.io/&quot;&gt;Atom&lt;/a&gt; 或者 &lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime Text&lt;/a&gt; 来的强大，据我所知，Xcode的多光标功能只对符号起作用。
-&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-5b51257141a1e905.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图6.png&quot; /&gt;
-&lt;strong&gt;7.谁是饭桶&lt;/strong&gt;
-你是在一个团队里工作么？你是否遇到过需要或者就是很想知道到底是谁编写了那行可怕的错误代码呢？把光标移动到出错的那一行，单击右键选择然后在菜单里选择Show Blame for Line。
-&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/683658-f38a9e77b4fdaad7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;图7.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;原文链接：&lt;a href=&quot;http://www.cocoachina.com/ios/20160304/15558.html&quot;&gt;原文&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;展开/隐藏 代码的快捷键:&lt;/strong&gt;
-command + option + &amp;lt;— （隐藏）
-command + option +  —&amp;gt;（展开）
-&lt;strong&gt;全局修改局部变量快捷键:&lt;/strong&gt;
-command + control + e
-&lt;strong&gt;storyboard中快速打开对应的控制器:&lt;/strong&gt;
-command + option + enter
-拓展链接：&lt;a href=&quot;http://www.cocoachina.com/ios/20160822/17393.html&quot;&gt;Xcode常用快捷键&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 20 Jun 2016 13:10:04 +0800</pubDate>
-        <link>https://hnxyzhw.github.io/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
-        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS用ASIHttpRequest上传图片文件</title>
-        <description>&lt;p&gt;在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。
-#import &amp;lt;UIKit/UIKit.h&amp;gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#import &quot;ASIHTTPRequest.h&quot;  
-&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#import &quot;ASIFormDataRequest.h&quot;  
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIViewController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASIHTTPRequestDelegate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
-
-&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_auth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;-(void)viewDidLoad {
-        [super viewDidLoad];&lt;br /&gt;
-        UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];&lt;br /&gt;
-        loginBtn.frame = CGRectMake(100, 20, 120, 40);&lt;br /&gt;
-        [loginBtn setTitle:@”登录” forState:UIControlStateNormal];&lt;br /&gt;
-        [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];&lt;br /&gt;
-        [self.view addSubview:loginBtn];      &lt;br /&gt;
-        UIButton *uploadBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];&lt;br /&gt;
-        uploadBtn.frame = CGRectMake(100, 80, 120, 40);&lt;br /&gt;
-        [uploadBtn setTitle:@”上传” forState:UIControlStateNormal];&lt;br /&gt;
-        [uploadBtn   addTarget:self action:@selector(upload) forControlEvents:UIControlEventTouchUpInside]; &lt;br /&gt;
-        [self.view addSubview:uploadBtn];
-}&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;(void)login {&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSURL *url = [NSURL URLWithString:@&quot;...&quot;];//此处省略请求url  
-
-  //请求  
-
-  ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];  
-
-  request.tag = 10;  
-
-  request.delegate = self;  
-
-  [request startAsynchronous];  
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-
-    &lt;p&gt;}&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;(void)upload {&lt;/p&gt;
-
-        &lt;p&gt;NSURL* url = [NSURL URLWithString:@”…”];//此处省略请求url&lt;/p&gt;
-
-        &lt;p&gt;UIImage* img = [UIImage imageNamed:@”haoyou.png”];&lt;/p&gt;
-
-        &lt;p&gt;NSData* data = UIImagePNGRepresentation(img);&lt;/p&gt;
-
-        &lt;p&gt;//ASIFormDataRequest请求是post请求，可以查看其源码&lt;/p&gt;
-
-        &lt;p&gt;ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:url];&lt;/p&gt;
-
-        &lt;p&gt;request.tag = 20;&lt;/p&gt;
-
-        &lt;p&gt;request.delegate = self;&lt;/p&gt;
-
-        &lt;p&gt;[request setPostValue:self.m_auth forKey:@”m_auth”];&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;p&gt;//    [request setFile:@”tabbar.png” forKey:@”haoyou”];//如果有路径，上传文件&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [request setData:data  withFileName:@&quot;tmp.png&quot; andContentType:@&quot;image/png&quot; forKey:@&quot;headimage&quot;];  
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-
-    &lt;p&gt;//               数据                文件名,随便起                 文件类型            设置key，要和服务端保持一致&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [request startAsynchronous];  
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-
-    &lt;p&gt;}&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;(void)requestFailed:(ASIHTTPRequest *)request {&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSLog(@&quot;请求失败&quot;);  
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-
-    &lt;p&gt;}&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;(void)requestFinished:(ASIHTTPRequest *)request {&lt;/p&gt;
-
-        &lt;p&gt;if (request.tag == 10) {&lt;/p&gt;
-
-        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:request.responseData options:0 error:nil];  
-
-  self.m_auth = [dic objectForKey:@&quot;m_auth&quot;];  
-
-  NSLog(@&quot;%@&quot;, self.m_auth);  
-&lt;/code&gt;&lt;/pre&gt;
-        &lt;/div&gt;
-
-        &lt;p&gt;}&lt;/p&gt;
-
-        &lt;p&gt;if (request.tag == 20) {&lt;/p&gt;
-
-        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  NSLog(@&quot;%@&quot;, request.responseString);  
-&lt;/code&gt;&lt;/pre&gt;
-        &lt;/div&gt;
-
-        &lt;p&gt;}&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;p&gt;}&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;//判断图片是不是png格式的文件
- if (UIImagePNGRepresentation(image)) { 
-      //返回为png图像。 
-    data = UIImagePNGRepresentation(image); 
-}else { 
-    //返回为JPEG图像。 
-    data = UIImageJPEGRepresentation(image, 1.0); 
-}&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 08 Apr 2016 10:12:00 +0800</pubDate>
-        <link>https://hnxyzhw.github.io/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/</link>
-        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Hello World - Vno</title>
-        <description>&lt;h4 id=&quot;whats-this&quot;&gt;What’s this&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/onevcat/vno-jekyll&quot;&gt;Vno Jekyll&lt;/a&gt; is a theme for &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;. It is a port of my Ghost theme &lt;a href=&quot;https://github.com/onevcat/vno&quot;&gt;vno&lt;/a&gt;, which is originally developed from &lt;a href=&quot;https://github.com/daleanthony/uno&quot;&gt;Dale Anthony’s Uno&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;usage&quot;&gt;Usage&lt;/h4&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;git clone https://github.com/onevcat/vno-jekyll.git your_site
-&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;your_site
-&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bundler install
-&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bundler &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Your site with &lt;code class=&quot;highlighter-rouge&quot;&gt;Vno Jekyll&lt;/code&gt; enabled should be accessible in http://127.0.0.1:4000.&lt;/p&gt;
-
-&lt;p&gt;For more information about Jekyll, please visit &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll’s site&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;configuration&quot;&gt;Configuration&lt;/h4&gt;
-
-&lt;p&gt;All configuration could be done in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;. Remember you need to restart to serve the page when after changing the config file. Everything in the config file should be self-explanatory.&lt;/p&gt;
-
-&lt;h4 id=&quot;background-image-and-avatar&quot;&gt;Background image and avatar&lt;/h4&gt;
-
-&lt;p&gt;You could replace the background and avatar image in &lt;code class=&quot;highlighter-rouge&quot;&gt;assets/images&lt;/code&gt; folder to change them.&lt;/p&gt;
-
-&lt;h4 id=&quot;sites-using-vno&quot;&gt;Sites using Vno&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://onevcat.com&quot;&gt;My blog&lt;/a&gt; is using &lt;code class=&quot;highlighter-rouge&quot;&gt;Vno Jekyll&lt;/code&gt; as well, you could see how it works in real. There are some other sites using the same theme. You can find them below:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Site Name&lt;/th&gt;
-      &lt;th&gt;URL&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;OneV’s Den&lt;/td&gt;
-      &lt;td&gt;http://onevcat.com&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;If you happen to be using this theme, welcome to &lt;a href=&quot;https://github.com/onevcat/vno-jekyll/pulls&quot;&gt;send me a pull request&lt;/a&gt; to add your site link here. :)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;license&quot;&gt;License&lt;/h4&gt;
-
-&lt;p&gt;Great thanks to &lt;a href=&quot;https://github.com/daleanthony&quot;&gt;Dale Anthony&lt;/a&gt; and his &lt;a href=&quot;https://github.com/daleanthony/uno&quot;&gt;Uno&lt;/a&gt;. Vno Jekyll is based on Uno, and contains a lot of modification on page layout, animation, font and some more things I can not remember. Vno Jekyll is followed with Uno and be licensed as &lt;a href=&quot;http://creativecommons.org/licenses/by/4.0/&quot;&gt;Creative Commons Attribution 4.0 International&lt;/a&gt;. See the link for more information.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 16 Feb 2016 14:32:24 +0800</pubDate>
-        <link>https://hnxyzhw.github.io/2016/02/hello-world-vno/</link>
-        <guid isPermaLink="true">https://hnxyzhw.github.io/2016/02/hello-world-vno/</guid>
         
         
       </item>
