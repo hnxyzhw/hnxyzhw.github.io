@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="baidu-site-verification" content="tWHAGgbW6u" />
-  <title>Xcode开发使用小技巧</title>
-  <meta name="description" content="1.快速打开快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。2.显示项目导航器在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Proje...">
+  <title>iOS动画中的UIViewAnimation里面的枚举</title>
+  <meta name="description" content="开发过程中常用的关于函数有以下几个:">
   <meta name="author" content="Wei Wang">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Xcode开发使用小技巧">
-  <meta name="twitter:description" content="1.快速打开快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。2.显示项目导航器在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Proje...">
+  <meta name="twitter:title" content="iOS动画中的UIViewAnimation里面的枚举">
+  <meta name="twitter:description" content="开发过程中常用的关于函数有以下几个:">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Xcode开发使用小技巧">
-  <meta property="og:description" content="1.快速打开快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。2.显示项目导航器在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Proje...">
+  <meta property="og:title" content="iOS动画中的UIViewAnimation里面的枚举">
+  <meta property="og:description" content="开发过程中常用的关于函数有以下几个:">
 
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
   <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <link rel="canonical" href="https://hnxyzhw.github.io/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+  <link rel="canonical" href="https://hnxyzhw.github.io/2015/09/iOS%E5%8A%A8%E7%94%BB%E4%B8%AD%E7%9A%84UIViewAnimation%E9%87%8C%E9%9D%A2%E7%9A%84%E6%9E%9A%E4%B8%BE/">
   <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
 
   <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
@@ -149,55 +149,112 @@
 <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-06-20 13:10:04 +0800" itemprop="datePublished" class="post-meta__date date">2016-06-20</time> &#8226; <span class="post-meta__tags tags"></span>
+      <time datetime="2015-09-18 15:56:00 +0800" itemprop="datePublished" class="post-meta__date date">2015-09-18</time> &#8226; <span class="post-meta__tags tags">iOS,UIViewAnimation</span>
     </div>
-    <h1 class="post-title">Xcode开发使用小技巧</h1>
+    <h1 class="post-title">iOS动画中的UIViewAnimation里面的枚举</h1>
   </header>
 
   <section class="post">
-    <p><strong>1.快速打开</strong>
-快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。
-<img src="http://upload-images.jianshu.io/upload_images/683658-fcce8108712ab0d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图1.png" />
-<strong>2.显示项目导航器</strong>
-在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Project Navigator） 可以为你节省很多时间，这个命令可以在界面左侧的项目导航栏中显示当前文件，默认快捷是Command + Shift + J.</p>
+    <p>开发过程中常用的关于函数有以下几个:</p>
 
-<p><strong>3.辅助编辑器</strong>
-你可能对辅助编辑器已经很熟悉了。但很多开发者对其使用的却不够充分，它可以显示一个文件的副本或者同时在用户界面和视窗控制器里操作，这一点非常赞。
-辅助编辑器有很多种用法，我经常用它来找出某个特定算法都在哪里出现和被怎样的调用过. 把光标移动到一个算法的主体，从辅助编辑器的顶部菜单中选择Callers就可以看到。
-<img src="http://upload-images.jianshu.io/upload_images/683658-da9798e6f376c520.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图3.jpg" />
-<strong>4.跳转到方法</strong>
-在使用类或者结构时，我经常需要快速的跳转到类的某个特定方法。通过快捷键Control + 6 再输入算法的头几个字母就可以非常方便的做到这点。
-<img src="http://upload-images.jianshu.io/upload_images/683658-bf2991fe9c75743c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图4.png" />
-<strong>5.浏览文档</strong>
-不管你多有经验，说明文档总是开发者最好的朋友。按住Option键并点击你感兴趣的符号，就可以快速的打开Xcode的文档浏览器，在这里可以搜索某个特定类或者方法。
-在这里向各位推荐Dash 文档浏览器，它比Xcdoe内建的文档浏览器更快更强大。为了能在Dash上实现上述相同的效果，你需要安装一个<a href="https://github.com/omz/Dash-Plugin-for-Xcode">Xcode 插件</a>。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>1. [UIView animateWithDuration: animations:^{} completion:^(BOOL finished) {}];
 
-<p><strong>6.范围编辑</strong>
-多光标是个很棒的并且每个高级的编辑器都该有的特性。Xcode的代码编辑也有这个功能，但很难找到并且难以使用。在Xcode中，该功能被称为范围编辑（Edit All in Scope，默认快捷键Ctrl+Command+E）。
-将光标移动到要编辑的符号，鼠标指针在字符上停留一两秒就会在字符右边出现一个小小的倒三角，点击那个三角并从菜单中选择Edit All in Scope，你也可以自己给这个命令设定一个快捷键。（修改方法： Preferences -&gt; Key Bindings -&gt; 搜索 “Edit all in scope”）
-可惜的是，Xcode对多光标功能的实现不如 <a href="https://atom.io/">Atom</a> 或者 <a href="http://www.sublimetext.com/">Sublime Text</a> 来的强大，据我所知，Xcode的多光标功能只对符号起作用。
-<img src="http://upload-images.jianshu.io/upload_images/683658-5b51257141a1e905.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图6.png" />
-<strong>7.谁是饭桶</strong>
-你是在一个团队里工作么？你是否遇到过需要或者就是很想知道到底是谁编写了那行可怕的错误代码呢？把光标移动到出错的那一行，单击右键选择然后在菜单里选择Show Blame for Line。
-<img src="http://upload-images.jianshu.io/upload_images/683658-f38a9e77b4fdaad7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图7.png" /></p>
+2. [UIView animateWithDuration: animations:^{}];
 
-<p>原文链接：<a href="http://www.cocoachina.com/ios/20160304/15558.html">原文</a></p>
+3. [UIView animateWithDuration: delay: options: animations: completion:^(BOOL finished) {}];
+</code></pre>
+</div>
 
-<p><strong>展开/隐藏 代码的快捷键:</strong>
-command + option + &lt;— （隐藏）
-command + option +  —&gt;（展开）
-<strong>全局修改局部变量快捷键:</strong>
-command + control + e
-<strong>storyboard中快速打开对应的控制器:</strong>
-command + option + enter
-拓展链接：<a href="http://www.cocoachina.com/ios/20160822/17393.html">Xcode常用快捷键</a></p>
+<p>       前两个动画的函数的使用,没有太多的可讲.第三个动画,多了一个options选项.需要我们传入一个枚举,这个枚举主要的作用:当前的动画执行随时间函数变化(由快变慢,由慢变快等…效果).可以实现类似淡入淡出的效果.</p>
 
+<h3 id="section">动画过程设置</h3>
+
+<ol>
+  <li>
+    <p>UIViewAniOpinionLayoutSubviews //子视图中控讲将跟父视图中控件使用相同的动画</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionAllowUserInteraction //动画时允许用户交互</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOpinionBeginFromCurrentState //重当前状态开始执行动画</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionRepeat //动画一直重复播放</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionAutoreverse //执行动画回路,前提是设置动画无限重复</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionOverrideInheritedDuration //忽略外层动画嵌套的执行时间</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionOverrideInheritedCurve //忽略外层动画嵌套的时间变化曲线</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionAllowAnimatedContent //通过改变属性和重绘实现动画效果，如果key没有提交动画将使用快照</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionOverrideInheritedOptions //忽略嵌套继承的选项</p>
+  </li>
+</ol>
+
+<h3 id="section-1">时间函数曲线相关</h3>
+
+<ol>
+  <li>
+    <p>UIViewAnimationOptionCurveEaseInOut //时间曲线函数，由慢到快</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionCurveEaseIn //时间曲线函数，由慢到特别快</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionCurveEaseOut //时间曲线函数，由快到慢</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionCurveLinear //时间曲线函数，匀速
+转场动画它一般是用在这个方法中的：</p>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[UIView transitionFromView: toView: duration: options: completion:^(BOOL finished) {}];
+</code></pre>
+</div>
+
+<h3 id="section-2">相关的转场动画</h3>
+
+<ol>
+  <li>
+    <p>UIViewAnimationOptionTransitionNone //无转场动画</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionFlipFromLeft //转场从左翻转</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionFlipFromRight //转场从右翻转</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionCurlUp //上卷转场</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionCurlDown //下卷转场</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionCrossDissolve //转场交叉消失</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionFlipFromTop //转场从上翻转</p>
+  </li>
+  <li>
+    <p>UIViewAnimationOptionTransitionFlipFromBottom //转场从下翻转</p>
+  </li>
+</ol>
 
   </section>
 </article>
 
 <!-- 多说分享 -->
-<div class="ds-share" data-thread-key="/2016/06/Xcode开发使用小技巧" data-title="Xcode开发使用小技巧" data-images="http://a.cphotos.bdimg.com/timg?image&quality=100&size=b4000_4000&sec=1480578965&di=ca3ca1b345cfc3b09716dd2bcfe26c79&src=http://pic.58pic.com/58pic/15/56/29/39V58PICPti_1024.png" data-content="Xcode开发使用小技巧" data-url="http://hnxyzhw.xyz//2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+<div class="ds-share" data-thread-key="/2015/09/iOS动画中的UIViewAnimation里面的枚举" data-title="iOS动画中的UIViewAnimation里面的枚举" data-images="http://a.cphotos.bdimg.com/timg?image&quality=100&size=b4000_4000&sec=1480578965&di=ca3ca1b345cfc3b09716dd2bcfe26c79&src=http://pic.58pic.com/58pic/15/56/29/39V58PICPti_1024.png" data-content="iOS动画中的UIViewAnimation里面的枚举" data-url="http://hnxyzhw.xyz//2015/09/iOS%E5%8A%A8%E7%94%BB%E4%B8%AD%E7%9A%84UIViewAnimation%E9%87%8C%E9%9D%A2%E7%9A%84%E6%9E%9A%E4%B8%BE/">
     <div class="ds-share-inline">
       <ul  class="ds-share-icons-16">
 
@@ -214,7 +271,7 @@ command + option + enter
  </div>
 
 <!-- 多说评论框 start -->
-	<!-- <div class="ds-thread" data-thread-key="/2016/06/Xcode开发使用小技巧" data-title="Xcode开发使用小技巧" data-url="http://127.0.0.1:4000//2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/"></div> -->
+	<!-- <div class="ds-thread" data-thread-key="/2015/09/iOS动画中的UIViewAnimation里面的枚举" data-title="iOS动画中的UIViewAnimation里面的枚举" data-url="http://127.0.0.1:4000//2015/09/iOS%E5%8A%A8%E7%94%BB%E4%B8%AD%E7%9A%84UIViewAnimation%E9%87%8C%E9%9D%A2%E7%9A%84%E6%9E%9A%E4%B8%BE/"></div> -->
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <!-- <script type="text/javascript">
@@ -231,7 +288,7 @@ var duoshuoQuery = {short_name:"test-comments"};
 <!-- 多说公共JS代码 end -->
 
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/2016/06/Xcode开发使用小技巧" data-title="Xcode开发使用小技巧" data-url="http://hnxyzhw.xyz//2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/"></div>
+	<div class="ds-thread" data-thread-key="/2015/09/iOS动画中的UIViewAnimation里面的枚举" data-title="iOS动画中的UIViewAnimation里面的枚举" data-url="http://hnxyzhw.xyz//2015/09/iOS%E5%8A%A8%E7%94%BB%E4%B8%AD%E7%9A%84UIViewAnimation%E9%87%8C%E9%9D%A2%E7%9A%84%E6%9E%9A%E4%B8%BE/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -252,20 +309,12 @@ var duoshuoQuery = {short_name:"articlecomments"};
    
    <div class="read-more-item">
        <span class="read-more-item-dim">上一篇文章</span>
-       <h2 class="post-list__post-title post-title"><a href="/2016/07/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6(framework%E5%92%8Ca)%E5%90%88%E5%B9%B6%E5%85%BC%E5%AE%B9%E7%9C%9F%E6%9C%BA%E4%BB%A5%E5%8F%8A%E6%A8%A1%E6%8B%9F%E5%99%A8/" title="link to iOS静态库文件(framework和a)合并兼容真机以及模拟器">iOS静态库文件(framework和a)合并兼容真机以及模拟器</a></h2>
-       <p class="excerpt">       开发过程中有时候需要讲一些功能代码封装到静态库文件中，以确保代码的安全性。主要分为：静态库、动态库两种       静态库和动态库的存在形式:       静态库： .a 和 .framework        动态库： .dylib 和 .framework       静态库：链接时，静态库会被完整地复制到可执行文件中， 被多次使用就有多份冗余拷贝动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。       需要注...&hellip;</p>
-       <div class="post-list__meta"><time datetime="2016-07-06 14:57:00 +0800" class="post-list__meta--date date">2016-07-06</time> &#8226; <span class="post-list__meta--tags tags">iOS,静态库文件</span><a class="btn-border-small" href=/2016/07/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6(framework%E5%92%8Ca)%E5%90%88%E5%B9%B6%E5%85%BC%E5%AE%B9%E7%9C%9F%E6%9C%BA%E4%BB%A5%E5%8F%8A%E6%A8%A1%E6%8B%9F%E5%99%A8/>继续阅读</a></div>
-   </div>
-   
-
-   
-   
-   <div class="read-more-item">
-       <span class="read-more-item-dim">下一篇文章</span>
        <h2 class="post-list__post-title post-title"><a href="/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/" title="link to iOS用ASIHttpRequest上传图片文件">iOS用ASIHttpRequest上传图片文件</a></h2>
        <p class="excerpt">       在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。#import &lt;UIKit/UIKit.h&gt;#import "ASIHTTPRequest.h"#import "ASIFormDataRequest.h"  @interface ViewController...&hellip;</p>
        <div class="post-list__meta"><time datetime="2016-04-08 10:12:00 +0800" class="post-list__meta--date date">2016-04-08</time> &#8226; <span class="post-list__meta--tags tags">iOS,ASIHttpRequest</span><a class="btn-border-small" href=/2016/04/iOS%E7%94%A8ASIHttpRequest%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6/>继续阅读</a></div>
    </div>
+   
+
    
 </section>
 

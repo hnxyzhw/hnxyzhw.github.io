@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="baidu-site-verification" content="tWHAGgbW6u" />
+  <title>iOS静态库文件(framework和a)合并兼容真机以及模拟器</title>
+  <meta name="description" content="       开发过程中有时候需要讲一些功能代码封装到静态库文件中，以确保代码的安全性。主要分为：静态库、动态库两种">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="iOS静态库文件(framework和a)合并兼容真机以及模拟器">
+  <meta name="twitter:description" content="       开发过程中有时候需要讲一些功能代码封装到静态库文件中，以确保代码的安全性。主要分为：静态库、动态库两种">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="iOS静态库文件(framework和a)合并兼容真机以及模拟器">
+  <meta property="og:description" content="       开发过程中有时候需要讲一些功能代码封装到静态库文件中，以确保代码的安全性。主要分为：静态库、动态库两种">
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://hnxyzhw.github.io/2016/07/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6(framework%E5%92%8Ca)%E5%90%88%E5%B9%B6%E5%85%BC%E5%AE%B9%E7%9C%9F%E6%9C%BA%E4%BB%A5%E5%8F%8A%E6%A8%A1%E6%8B%9F%E5%99%A8/">
+  <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Allen Woody 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Allen Woody logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Allen Woody" class="blog-button">Allen Woody</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不要上来就说:给个代码吧!你应该想想为什么。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://www.jianshu.com/users/ec2765510404/latest_articles" target="_blank">我在简书上创建的有关于iOS开发的技术专辑，欢迎各位前来了解！</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="hnxyzhw blog" class="blog-button">博客列表</a></li>
+                
+                  <li class="navigation__item"><a href="https://github.com/hnxyzhw" target="_blank" title="My Projects">Github项目</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/1823801224" title="@1823801224 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/hnxyzhw" title="@hnxyzhw 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/hnxyzhw" title="@hnxyzhw" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Google Plus -->
+  <li class="navigation__item">
+    <a href="https://plus.google.com/hnxyzhw@gmail.com" rel="author" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google Plus</span>
+    </a>
+  </li>
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:hnxyzhw611@126.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            #文章内容
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-07-06 14:57:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-07-06</time> &#8226; <span class="post-meta__tags tags">iOS,静态库文件</span>
+    </div>
+    <h1 class="post-title">iOS静态库文件(framework和a)合并兼容真机以及模拟器</h1>
+  </header>
+
+  <section class="post">
+    <p>       开发过程中有时候需要讲一些功能代码封装到静态库文件中，以确保代码的安全性。
+主要分为：静态库、动态库两种</p>
+
+<p>       静态库和动态库的存在形式:</p>
+
+<p>       静态库： .a 和 .framework <br />
+       动态库： .dylib 和 .framework</p>
+
+<p>       静态库：链接时，静态库会被完整地复制到可执行文件中， 被多次使用就有多份冗余拷贝
+动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</p>
+
+<p>       需要注意的是：项目中如果使用了自制的动态库，不能被上传到 AppStore
+所以基本上就用不到制作动态库文件了，下面来说一说静态库文件，下面以本地framework为例。</p>
+
+<p>       静态库文件在编译时，你选择不同的设备时编译出来的framework所支持的环境也会不同，也就是你在制作完framework后，选择的是在模拟器下编译的话，那么你引入到其他工程中，就只能在模拟器下调用执行。如果你选择的是在真机环境下编译的话，那么你引入到其他工程中，只能在真机上调试运行。</p>
+
+<p>       选择不同的编译环境，你编译出的framework所支持的环境也不一样，每次在不同的环境下编译后，你可以选中你的framework（注意编译command+B通过后，相应的framework的名字颜色会又红色变为黑色），鼠标右键，Show in Finder，可以对比一下，你会发现在模拟机版本编译后的文件路径在：Debug-iphonesimuator文件夹下。而选择真机版本编译后的文件路径在：Debug-iphonesimuator文件夹下。</p>
+
+<p>       so,问题来了，如果想要在真机跟模拟器下都能使用我们自己制作的framework的，要怎么解决这个问题呢？总不能没次更换不同环境下的framework吧(其实不怕麻烦的程序员可以这么整，但作为一个资深强迫症患者程序员来说，太痛苦了，宝宝做不到啊)。</p>
+
+<p>       解决上面这个问题的话，就需要我们手动合并我们framework里面的一些文件。</p>
+
+<p>举例：</p>
+
+<p>       比如我编译的framework为：ZHWActivity.framework。选择不同环境下的framework，并Show in Finder，会发现在两个ZHWActivity.framework文件夹下面都有一个名为ZHWActivity(你编译的framework的名字)的文件，这个文件在Mac下显示的是一个白板文件。</p>
+
+<p>       下面我们就需要将这个两个文件合并成一个ZHWActivity文件：</p>
+
+<p>       在桌面新建一个文件夹merge，在merge文件夹下在新建两个文件夹merge1，merge2</p>
+
+<p>       将不同环境下的framework中的ZHWActivity(就是那个白板文件)，分别放到这个两个文件夹里。</p>
+
+<p>       然后打开终端，cd到merge目录下，执行一下命令：</p>
+
+<p>lipo -create merge1/ZHWActivity merge2/ZHWActivity -output ZHWActivity</p>
+
+<p>(参考：lipo -create “……真机/目录/那个白板文件“ “……/模拟器/目录/那个白板文件” -output “…..另保存的/目录/文件”)</p>
+
+<p>       在终端执行完后，会发现在merge目录下，多出来一个ZHWActivity文件（也是一个白板文件），这个就是已经合并后的文件。</p>
+
+<p>       将合并后的文件拷贝一份，然后在你导入ZHWActivity.framework工程里，Show in Finder一下。讲工程里原来的ZHWActivity（旧的白板文件），替换成我们合并后的ZHWActivity（新的白板文件，可以看一文件的大小已经是之前旧文件的两倍）。在重新编译一下，你会神奇的发现，在真机跟模拟器下无缝切换，再也不会报错了有木有。</p>
+
+<p>       tip1：同理在制作.a静态库文件时，也是区分真机跟模拟器的。也是可以按照上面的方法来合并**.a文件，方便我们开发过程中使用。</p>
+
+<p>       tip2：如果我们的制作的静态库文件中有包含的有.mm文件（c++跟oc混编的代码文件），那么我么在其他地方导入时，就需要讲相应的.m文件也改为.mm文件才能正常使用。（如在ViewController.m中引入头文件那么就需要改成ViewController.mm）。</p>
+
+<p>关于静态库文件的制作可以参考下面这篇文章:</p>
+
+<p><a href="http://www.jianshu.com/p/fa44be96f423">xocde7标准Framework静态库制作方法，工程转Framework</a></p>
+
+<p><a href="http://www.cocoachina.com/ios/20150226/11182.html">iOS开发之静态库.a的制作教程</a></p>
+
+<p><a href="http://www.jianshu.com/p/a80ae93a70b1">简书地址</a></p>
+
+  </section>
+</article>
+
+<!-- 多说分享 -->
+<div class="ds-share" data-thread-key="/2016/07/iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-title="iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-images="http://a.cphotos.bdimg.com/timg?image&quality=100&size=b4000_4000&sec=1480578965&di=ca3ca1b345cfc3b09716dd2bcfe26c79&src=http://pic.58pic.com/58pic/15/56/29/39V58PICPti_1024.png" data-content="iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-url="http://hnxyzhw.xyz//2016/07/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6(framework%E5%92%8Ca)%E5%90%88%E5%B9%B6%E5%85%BC%E5%AE%B9%E7%9C%9F%E6%9C%BA%E4%BB%A5%E5%8F%8A%E6%A8%A1%E6%8B%9F%E5%99%A8/">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+
+<!-- 多说评论框 start -->
+	<!-- <div class="ds-thread" data-thread-key="/2016/07/iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-title="iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-url="http://127.0.0.1:4000//2016/07/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6(framework%E5%92%8Ca)%E5%90%88%E5%B9%B6%E5%85%BC%E5%AE%B9%E7%9C%9F%E6%9C%BA%E4%BB%A5%E5%8F%8A%E6%A8%A1%E6%8B%9F%E5%99%A8/"></div> -->
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- <script type="text/javascript">
+var duoshuoQuery = {short_name:"test-comments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script> -->
+<!-- 多说公共JS代码 end -->
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/07/iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-title="iOS静态库文件(framework和a)合并兼容真机以及模拟器" data-url="http://hnxyzhw.xyz//2016/07/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6(framework%E5%92%8Ca)%E5%90%88%E5%B9%B6%E5%85%BC%E5%AE%B9%E7%9C%9F%E6%9C%BA%E4%BB%A5%E5%8F%8A%E6%A8%A1%E6%8B%9F%E5%99%A8/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"articlecomments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">上一篇文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/07/iOS-%E4%B8%ADJS%E4%B8%8EOC(UIWebView)%E7%9A%84%E4%BA%A4%E4%BA%92/" title="link to iOS-中JS与OC(UIWebView)的交互">iOS-中JS与OC(UIWebView)的交互</a></h2>
+       <p class="excerpt">项目开发中，会推一些活动供用户参加，活动页面一般都是用h5或者web页面，这活动页面有时候需要跟移动端有交互操作，比如点了一个链接或者button，跳转到app内的某个页面。那么这个时候就需要移动端交互来完成了。UIWebView是可以捕获当前页面要去加载的url地址，比如当你点击了页面的一个超链接，或者一个图片类型的标签连接，又或者是点击页面的中的button（在点击方法里去加载指定的url）。那么当前的UIWebView就会去加载这个url地址，此时我们可以通过UIWebView的代理...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-07-26 20:26:00 +0800" class="post-list__meta--date date">2016-07-26</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/07/iOS-%E4%B8%ADJS%E4%B8%8EOC(UIWebView)%E7%9A%84%E4%BA%A4%E4%BA%92/>继续阅读</a></div>
+   </div>
+   
+
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">下一篇文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="link to Xcode开发使用小技巧">Xcode开发使用小技巧</a></h2>
+       <p class="excerpt">1.快速打开快速打开（Open Quickly）命令在Xcode的File菜单中，当然，用快捷键Command+Shift+O会更方便一些。这个命令可以开启一个小窗格用来快速搜索浏览文件、类、算法以及函数等。2.显示项目导航器在一个有很多文件和文件夹的大型项目中， 显示项目导航命令（Reveal in Project Navigator） 可以为你节省很多时间，这个命令可以在界面左侧的项目导航栏中显示当前文件，默认快捷是Command + Shift + J.3.辅助编辑器你可能对辅助编辑...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-06-20 13:10:04 +0800" class="post-list__meta--date date">2016-06-20</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/06/Xcode%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-02-17 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/hnxyzhw">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+  </body>
+
+</html>

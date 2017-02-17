@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="baidu-site-verification" content="tWHAGgbW6u" />
   <title>iOS用ASIHttpRequest上传图片文件</title>
-  <meta name="description" content="在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。#import &lt;UIKit/UIKit.h&gt;">
+  <meta name="description" content="       在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。">
   <meta name="author" content="Wei Wang">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="iOS用ASIHttpRequest上传图片文件">
-  <meta name="twitter:description" content="在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。#import &lt;UIKit/UIKit.h&gt;">
+  <meta name="twitter:description" content="       在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。">
 
   <meta property="og:type" content="article">
   <meta property="og:title" content="iOS用ASIHttpRequest上传图片文件">
-  <meta property="og:description" content="在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。#import &lt;UIKit/UIKit.h&gt;">
+  <meta property="og:description" content="       在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。">
 
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
   <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
@@ -149,144 +149,91 @@
 <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-04-08 10:12:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-04-08</time> &#8226; <span class="post-meta__tags tags"></span>
+      <time datetime="2016-04-08 10:12:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-04-08</time> &#8226; <span class="post-meta__tags tags">iOS,ASIHttpRequest</span>
     </div>
     <h1 class="post-title">iOS用ASIHttpRequest上传图片文件</h1>
   </header>
 
   <section class="post">
-    <p>在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。
-#import &lt;UIKit/UIKit.h&gt;</p>
+    <p>       在上传时如果前后太约定的有加密传参，请一定检查你在请求时是否已经加密了。如果加密了，请检查后台是否在拿到参数后，是否对参数进行解密。有一方为按约定的加密解密方式处理，就有可能到时无法上传。也可以使用不加密的方式请求，来验证后台是否使用加密传输方式进行通讯。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#import "ASIHTTPRequest.h"  
-</span>
-<span class="cp">#import "ASIFormDataRequest.h"  
-</span>
-<span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">:</span> <span class="nc">UIViewController</span> <span class="o">&lt;</span><span class="n">ASIHTTPRequestDelegate</span><span class="o">&gt;</span>  
-
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#import &lt;UIKit/UIKit.h&gt;
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"  
+</span><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">:</span> <span class="nc">UIViewController</span><span class="o">&lt;</span><span class="n">ASIHTTPRequestDelegate</span><span class="o">&gt;</span>  
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span><span class="n">NSString</span> <span class="o">*</span><span class="n">m_auth</span><span class="p">;</span>  
-
 <span class="k">@end</span>
 </code></pre>
 </div>
 
-<p>-(void)viewDidLoad {
-        [super viewDidLoad];<br />
-        UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];<br />
-        loginBtn.frame = CGRectMake(100, 20, 120, 40);<br />
-        [loginBtn setTitle:@”登录” forState:UIControlStateNormal];<br />
-        [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];<br />
-        [self.view addSubview:loginBtn];      <br />
-        UIButton *uploadBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];<br />
-        uploadBtn.frame = CGRectMake(100, 80, 120, 40);<br />
-        [uploadBtn setTitle:@”上传” forState:UIControlStateNormal];<br />
-        [uploadBtn   addTarget:self action:@selector(upload) forControlEvents:UIControlEventTouchUpInside]; <br />
+<div class="highlighter-rouge"><pre class="highlight"><code>-(void)viewDidLoad {
+        [super viewDidLoad];  
+        UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];  
+        loginBtn.frame = CGRectMake(100, 20, 120, 40);  
+        [loginBtn setTitle:@"登录" forState:UIControlStateNormal];  
+        [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];  
+        [self.view addSubview:loginBtn];        
+        UIButton *uploadBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];  
+        uploadBtn.frame = CGRectMake(100, 80, 120, 40);  
+        [uploadBtn setTitle:@"上传" forState:UIControlStateNormal];  
+        [uploadBtn   addTarget:self action:@selector(upload) forControlEvents:UIControlEventTouchUpInside];   
         [self.view addSubview:uploadBtn];
-}</p>
+}   
 
-<ul>
-  <li>
-    <p>(void)login {</p>
+- (void)login {  
+        NSURL *url = [NSURL URLWithString:@"..."];
+        //此处省略请求url  
+        //请求  
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];  
+        request.tag = 10;  
+        request.delegate = self;  
+        [request startAsynchronous];  
 
-    <div class="highlighter-rouge"><pre class="highlight"><code>  NSURL *url = [NSURL URLWithString:@"..."];//此处省略请求url  
+    }  
+      
 
-  //请求  
+    - (void)upload {  
+        NSURL* url = [NSURL URLWithString:@"..."];//此处省略请求url  
+        UIImage* img = [UIImage imageNamed:@"haoyou.png"];  
+        NSData* data = UIImagePNGRepresentation(img);  
+        
+        //ASIFormDataRequest请求是post请求，可以查看其源码  
+        ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:url];  
+        request.tag = 20;  
+        request.delegate = self;  
+        [request setPostValue:self.m_auth forKey:@"m_auth"];  
 
-  ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];  
+    //    [request setFile:@"tabbar.png" forKey:@"haoyou"];//如果有路径，上传文件  
+        [request setData:data  withFileName:@"tmp.png" andContentType:@"image/png" forKey:@"headimage"];  
 
-  request.tag = 10;  
+    // 数据文件名,随便起文件类型设置key，要和服务端保持一致  
+        [request startAsynchronous];  
+    }  
 
-  request.delegate = self;  
+- (void)requestFailed:(ASIHTTPRequest *)request {  
+        NSLog(@"请求失败");  
+    }  
 
-  [request startAsynchronous];  
-</code></pre>
-    </div>
-
-    <p>}</p>
-
-    <ul>
-      <li>
-        <p>(void)upload {</p>
-
-        <p>NSURL* url = [NSURL URLWithString:@”…”];//此处省略请求url</p>
-
-        <p>UIImage* img = [UIImage imageNamed:@”haoyou.png”];</p>
-
-        <p>NSData* data = UIImagePNGRepresentation(img);</p>
-
-        <p>//ASIFormDataRequest请求是post请求，可以查看其源码</p>
-
-        <p>ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:url];</p>
-
-        <p>request.tag = 20;</p>
-
-        <p>request.delegate = self;</p>
-
-        <p>[request setPostValue:self.m_auth forKey:@”m_auth”];</p>
-      </li>
-    </ul>
-
-    <p>//    [request setFile:@”tabbar.png” forKey:@”haoyou”];//如果有路径，上传文件</p>
-
-    <div class="highlighter-rouge"><pre class="highlight"><code>  [request setData:data  withFileName:@"tmp.png" andContentType:@"image/png" forKey:@"headimage"];  
-</code></pre>
-    </div>
-
-    <p>//               数据                文件名,随便起                 文件类型            设置key，要和服务端保持一致</p>
-
-    <div class="highlighter-rouge"><pre class="highlight"><code>  [request startAsynchronous];  
-</code></pre>
-    </div>
-
-    <p>}</p>
-  </li>
-  <li>
-    <p>(void)requestFailed:(ASIHTTPRequest *)request {</p>
-
-    <div class="highlighter-rouge"><pre class="highlight"><code>  NSLog(@"请求失败");  
-</code></pre>
-    </div>
-
-    <p>}</p>
-
-    <ul>
-      <li>
-        <p>(void)requestFinished:(ASIHTTPRequest *)request {</p>
-
-        <p>if (request.tag == 10) {</p>
-
-        <div class="highlighter-rouge"><pre class="highlight"><code>  NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:request.responseData options:0 error:nil];  
-
-  self.m_auth = [dic objectForKey:@"m_auth"];  
-
-  NSLog(@"%@", self.m_auth);  
-</code></pre>
-        </div>
-
-        <p>}</p>
-
-        <p>if (request.tag == 20) {</p>
-
-        <div class="highlighter-rouge"><pre class="highlight"><code>  NSLog(@"%@", request.responseString);  
-</code></pre>
-        </div>
-
-        <p>}</p>
-      </li>
-    </ul>
-
-    <p>}</p>
-  </li>
-</ul>
-
-<p>//判断图片是不是png格式的文件
+ - (void)requestFinished:(ASIHTTPRequest *)request {  
+        if (request.tag == 10) {  
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:request.responseData options:0 error:nil];  
+            self.m_auth = [dic objectForKey:@"m_auth"];  
+            NSLog(@"%@", self.m_auth);  
+        }  
+        if (request.tag == 20) {  
+            NSLog(@"%@", request.responseString);  
+                }  
+}
  if (UIImagePNGRepresentation(image)) { 
-      //返回为png图像。 
+      //png图处理。 
     data = UIImagePNGRepresentation(image); 
 }else { 
-    //返回为JPEG图像。 
+    //JPEG图像处理。 
     data = UIImageJPEGRepresentation(image, 1.0); 
-}</p>
+}
+
+</code></pre>
+</div>
 
 
   </section>
@@ -358,9 +305,9 @@ var duoshuoQuery = {short_name:"articlecomments"};
    
    <div class="read-more-item">
        <span class="read-more-item-dim">下一篇文章</span>
-       <h2 class="post-list__post-title post-title"><a href="/2016/02/hello-world-vno/" title="link to Hello World - Vno">Hello World - Vno</a></h2>
-       <p class="excerpt">What’s thisVno Jekyll is a theme for Jekyll. It is a port of my Ghost theme vno, which is originally developed from Dale Anthony’s Uno.Usage$ git clone https://github.com/onevcat/vno-jekyll.git your_site$ cd your_site$ bundler install$ bundler exe...&hellip;</p>
-       <div class="post-list__meta"><time datetime="2016-02-16 14:32:24 +0800" class="post-list__meta--date date">2016-02-16</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/02/hello-world-vno/>继续阅读</a></div>
+       <h2 class="post-list__post-title post-title"><a href="/2015/09/iOS%E5%8A%A8%E7%94%BB%E4%B8%AD%E7%9A%84UIViewAnimation%E9%87%8C%E9%9D%A2%E7%9A%84%E6%9E%9A%E4%B8%BE/" title="link to iOS动画中的UIViewAnimation里面的枚举">iOS动画中的UIViewAnimation里面的枚举</a></h2>
+       <p class="excerpt">开发过程中常用的关于函数有以下几个:1. [UIView animateWithDuration: animations:^{} completion:^(BOOL finished) {}];2. [UIView animateWithDuration: animations:^{}];3. [UIView animateWithDuration: delay: options: animations: completion:^(BOOL finished) {}];       前两个...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2015-09-18 15:56:00 +0800" class="post-list__meta--date date">2015-09-18</time> &#8226; <span class="post-list__meta--tags tags">iOS,UIViewAnimation</span><a class="btn-border-small" href=/2015/09/iOS%E5%8A%A8%E7%94%BB%E4%B8%AD%E7%9A%84UIViewAnimation%E9%87%8C%E9%9D%A2%E7%9A%84%E6%9E%9A%E4%B8%BE/>继续阅读</a></div>
    </div>
    
 </section>
