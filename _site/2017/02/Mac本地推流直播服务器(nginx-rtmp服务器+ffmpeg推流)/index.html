@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="baidu-site-verification" content="tWHAGgbW6u" />
+  <title>Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)</title>
+  <meta name="description" content="文章简书地址：Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)">
+  <meta name="twitter:description" content="文章简书地址：Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)">
+  <meta property="og:description" content="文章简书地址：Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)">
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://hnxyzhw.github.io/2017/02/Mac%E6%9C%AC%E5%9C%B0%E6%8E%A8%E6%B5%81%E7%9B%B4%E6%92%AD%E6%9C%8D%E5%8A%A1%E5%99%A8(nginx-rtmp%E6%9C%8D%E5%8A%A1%E5%99%A8+ffmpeg%E6%8E%A8%E6%B5%81)/">
+  <link rel="alternate" type="application/rss+xml" title="Allen Woody" href="https://hnxyzhw.github.io/feed.xml">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Allen Woody 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Allen Woody logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Allen Woody" class="blog-button">Allen Woody</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不要上来就说:给个代码吧!你应该想想为什么。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是朱洪伍 (@hnxyzhw)，一名来自中国的 iOS 开发者。现居北京，就职于小灵通电子支付有限公司。正在get新技能，探求创意之源。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://www.jianshu.com/users/ec2765510404/latest_articles" target="_blank">我在简书上创建的有关于iOS开发的技术专辑，欢迎各位前来了解！</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="hnxyzhw blog" class="blog-button">博客列表</a></li>
+                
+                  <li class="navigation__item"><a href="https://github.com/hnxyzhw" target="_blank" title="My Projects">Github项目</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/1823801224" title="@1823801224 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/hnxyzhw" title="@hnxyzhw 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/hnxyzhw" title="@hnxyzhw" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Google Plus -->
+  <li class="navigation__item">
+    <a href="https://plus.google.com/hnxyzhw@gmail.com" rel="author" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google Plus</span>
+    </a>
+  </li>
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:hnxyzhw611@126.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            #文章内容
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-24 16:20:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-02-24</time> &#8226; <span class="post-meta__tags tags">iOS,推流直播</span>
+    </div>
+    <h1 class="post-title">Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)</h1>
+  </header>
+
+  <section class="post">
+    <p><strong><em>文章简书地址：<a href="http://www.jianshu.com/p/5bd4c8791228">Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)</a></em></strong></p>
+
+<p>  在2016过去的一年里移动端直播的火爆程度，不亚于求年楼盘的疯涨。作为一个合格的开发者，也要跟进时代的潮流。下面介绍一下基于Mac os系统搭建一个本地的直播服务器。主要是基于nginx+rtmp环境搭建的。
+  nginx、rtmp是在Mac上的终端安装Homebrow后，执行命令行来安装的。(提示安装最好开vpn翻墙，不然会很慢甚至有可能会安装失败)</p>
+
+<h4 id="homebrow">终端安装Homebrow</h4>
+<h5 id="section">安装命令行:</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+</code></pre>
+</div>
+<h5 id="section-1">卸载命令行:</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+</code></pre>
+</div>
+
+<p>相关操作截图:</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-e884339d93c6ccab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_1.png" /></p>
+
+<h4 id="brewnginx">brew安装nginx</h4>
+<h5 id="clone-nginx">clone nginx项目到本地的命令行:</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew tap homebrew/nginx
+</code></pre>
+</div>
+<p>相关操作截图:</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-1ae03a58b5608840.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_3.png" /></p>
+
+<p>#####下载成功后，执行安装命令行(注意执行是输入命令是nginx-full，中间不能有空格):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install nginx-full --with-rtmp-module
+</code></pre>
+</div>
+<p><strong>这个过程会比较长，请耐心等待</strong></p>
+
+<p>相关操作截图:</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-57faf6c904af6e2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_4.png" /></p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-9962d4e88f272d9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_5.png" /></p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-fee20020e61f5e69.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_6.png" /></p>
+
+<h4 id="section-2">可能会出现一些文件操作权限的问题的解决办法</h4>
+<p>打开finder，复制对应的路径，找到对应的文件夹或者文件，右键显示简介。修改共享与权限一栏中，用户对该文件夹或者文件的权限为读与写。修改完后可以在执行命令:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew link nginx
+</code></pre>
+</div>
+<p>如果仍然又问题，可以执行诊断的命令,对相应的错误进行排查:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew doctor
+</code></pre>
+</div>
+<p>相关操作截图:</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-ef727b306b31ea64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_9.png" /></p>
+
+<p>按照以上的操作后nginx、rtmp已经在Mac上安装完成了，但是还需要配置nginx、rtmp。</p>
+
+<h4 id="nginxrtmp">配置nginx、rtmp</h4>
+<p>终端打印出nginx的相关信息：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew info nginx-full
+</code></pre>
+</div>
+<p>可以看到到nginx的安装位置(1.10.3是安装后的nginx的版本号，可以通过nginx -v命令查看)：</p>
+
+<p><code class="highlighter-rouge">/usr/local/Cellar/nginx-full/1.10.3/bin/nginx</code></p>
+
+<p>nginx配置文件的位置：</p>
+
+<p><code class="highlighter-rouge">/usr/local/etc/nginx/nginx.conf</code></p>
+
+<h5 id="nginx">nginx服务操作</h5>
+<p>服务启动：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>nginx
+或者
+sudo nginx
+</code></pre>
+</div>
+<p>其他操作：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>nginx -s 重新加载配置|重启|停止|退出
+nginx -s reload|reopen|stop|quit
+
+nginx -V 查看版本，以及配置文件地址
+nginx -v 查看版本
+nginx -c filename 指定配置文件
+nginx -h 帮助
+nginx -t 测试配置是否有语法错误
+</code></pre>
+</div>
+<p>nginx启动后，在浏览器里输入下面的地址：<a href="http://localhost:8080">http://localhost:8080</a>或者<a href="http://127.0.0.1:8080/">http://127.0.0.1:8080/</a>
+会在浏览器上出现一下提示，表示安装成功：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Welcome to nginx!
+
+If you see this page, the nginx web server is successfully installed and working. Further configuration is required.
+
+For online documentation and support please refer to nginx.org.
+Commercial support is available at nginx.com.
+
+Thank you for using nginx.
+</code></pre>
+</div>
+<h5 id="nginx-1">如果说端口号8080被占用了,那么你可以执行下面操作来解决nginx服务的启动：</h5>
+<p>查看被占用8080的PID</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>lsof -i tcp:8080
+</code></pre>
+</div>
+<p>根据输出的PID，kill掉9934</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kill 9934
+</code></pre>
+</div>
+<p>然后再重新执行nginx，打开之前的链接地址，查看是否启动成功。</p>
+
+<h5 id="section-3">修改配置文件</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>brew info nginx-full
+</code></pre>
+</div>
+<p>找到配置文件的路径：<code class="highlighter-rouge">/usr/local/etc/nginx/nginx.conf</code>
+在finder中打开后，找到对应的nginx.conf文件，使用Mac自带的文本编辑打开。然后在文件的最下面也就是{}的外边，添加上rtmp的配置并保存,如下所示:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>rtmp {
+   server {
+        #监听的端口号,rtmp协议的默认端口号是1935
+        listen 1935;
+        #直播流配置,访问路径是rtmplive
+        application rtmplive {
+              #开启实时
+              live on;
+              #为rtmp引擎设置最大连接数.默认为off
+              max_connections 1024;
+              #不记录数据
+             record off;
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p>然后重启nginx，使配置文件生效:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>nginx -s reload 或者 sudo nginx -s reload
+</code></pre>
+</div>
+<p>如果说你无法重新启动nginx，可能会出现下面的错误(或者说其他的错误)：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>“/usr/local/var/run/nginx.pid”failed
+</code></pre>
+</div>
+
+<p>可以通过下面的操作来解决:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>nginx -c /usr/local/etc/nginx/nginx.conf
+nginx -s reload
+或者
+sudo nginx -c /usr/local/etc/nginx/nginx.conf
+sudo nginx -s reload
+</code></pre>
+</div>
+<h4 id="vlcrtmp">VLC支持rtmp协议的播放器的安装</h4>
+<p>在测试推流前，我们需要在Mac上安装一个支持rtmp协议的播放器，那就是鼎鼎大名的VLC。<a href="www.videolan.org/vlc/download-macosx.html">VLC Mac版官网,需要vpn翻墙</a></p>
+
+<h4 id="ffmepg">安装ffmepg工具，进行推流</h4>
+<p>ffmpeg安装命令:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install ffmpeg
+</code></pre>
+</div>
+<p>也可以用brew info ffmpeg指令进行查看Mac是否安装有ffmpeg:
+<img src="http://upload-images.jianshu.io/upload_images/683658-90e92f744560031c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170224_2.png" /></p>
+
+<p>在终端上看到Options有下面的输出，可以看到默认是没有安装rtmpdump的(后边有个小红叉):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>--with-rtmpdump
+	Enable RTMP protocol
+</code></pre>
+</div>
+<p>那么可以执行下面的命令行进行安装(经测试发现好像只安装ffmpeg,也是可以进行推流的，所以也可以省略这一步)：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew reinstall ffmpeg --with-rtmpdump
+或者
+sudo brew reinstall ffmpeg --with-rtmpdump
+</code></pre>
+</div>
+<h5 id="ffmpeg">ffmpeg简单操作</h5>
+<p>转换视频格式命令行:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ffmpeg -i CirlProgress.mov circle.mp4
+</code></pre>
+</div>
+<p>ffmpeg推流是以flv格式传输的，所以在推流是可能要注意你的视频格式，还又就是要注意视频的码率等问题。具体问题可以自行百度google解决。
+推流命令行:</p>
+
+<p><code class="highlighter-rouge">
+ffmpeg -re -i circle.mp4 -vcodec copy -f flv rtmp://localhost:1935/rtmplive/room
+</code>
+ 参考:</p>
+
+<p><code class="highlighter-rouge">
+ ffmpeg -re -i 你的视频文件的绝对路径 -vcodec copy -f flv rtmp://localhost:1935/rtmplive/room
+</code>
+相关操作截图:</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/683658-eb1d93fb0fb1863b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170222_14.png" /></p>
+
+<p>视频推流到本地的服务上后，可以打开VLC，在File-&gt;open network-&gt;选项中输入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>rtmp://localhost:1935/rtmplive/room
+</code></pre>
+</div>
+<p>注意，在使用ffmpeg推流时可能会出现一下的错误提示:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Connection to tcp://localhost:1935 failed (Connection refused), trying next address 
+</code></pre>
+</div>
+<p>出现这个问题，因为配置了nginx.conf后，没有需要重启的原因。
+执行下面的命令:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo nginx -s reload
+或者
+nginx -s reload
+</code></pre>
+</div>
+<p><strong>如果输入命令行后仍然有错误，那么试着关闭nginx的服务，以及8080的的相关进程，重启终端等其他方式重新操作一次。</strong></p>
+
+<p>相关操作截图:
+<img src="http://upload-images.jianshu.io/upload_images/683658-7c848e12c08f9ca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20170224_4.png" /></p>
+
+<p>参考博客：</p>
+
+<p><a href="http://blog.csdn.net/dracotianlong/article/details/21817097">mac 安装 nginx 环境以及nginx常用命令</a></p>
+
+<p><a href="http://blog.csdn.net/zh952016281/article/details/52683552">ffmpeg常用命令</a></p>
+
+  </section>
+</article>
+
+<!-- 多说分享 -->
+<div class="ds-share" data-thread-key="/2017/02/Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-title="Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-images="http://a.cphotos.bdimg.com/timg?image&quality=100&size=b4000_4000&sec=1480578965&di=ca3ca1b345cfc3b09716dd2bcfe26c79&src=http://pic.58pic.com/58pic/15/56/29/39V58PICPti_1024.png" data-content="Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-url="http://hnxyzhw.xyz//2017/02/Mac%E6%9C%AC%E5%9C%B0%E6%8E%A8%E6%B5%81%E7%9B%B4%E6%92%AD%E6%9C%8D%E5%8A%A1%E5%99%A8(nginx-rtmp%E6%9C%8D%E5%8A%A1%E5%99%A8+ffmpeg%E6%8E%A8%E6%B5%81)/">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+
+<!-- 多说评论框 start -->
+	<!-- <div class="ds-thread" data-thread-key="/2017/02/Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-title="Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-url="http://127.0.0.1:4000//2017/02/Mac%E6%9C%AC%E5%9C%B0%E6%8E%A8%E6%B5%81%E7%9B%B4%E6%92%AD%E6%9C%8D%E5%8A%A1%E5%99%A8(nginx-rtmp%E6%9C%8D%E5%8A%A1%E5%99%A8+ffmpeg%E6%8E%A8%E6%B5%81)/"></div> -->
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- <script type="text/javascript">
+var duoshuoQuery = {short_name:"test-comments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script> -->
+<!-- 多说公共JS代码 end -->
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2017/02/Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-title="Mac本地推流直播服务器(nginx、rtmp服务器+ffmpeg推流)" data-url="http://hnxyzhw.xyz//2017/02/Mac%E6%9C%AC%E5%9C%B0%E6%8E%A8%E6%B5%81%E7%9B%B4%E6%92%AD%E6%9C%8D%E5%8A%A1%E5%99%A8(nginx-rtmp%E6%9C%8D%E5%8A%A1%E5%99%A8+ffmpeg%E6%8E%A8%E6%B5%81)/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"articlecomments"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<section class="read-more">
+   
+
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">下一篇文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9803(%E6%B6%89%E5%8F%8A%E5%88%B0%E9%87%91%E8%9E%8D%E7%B1%BB%E7%9A%84%E9%9C%80%E8%A6%81%E7%94%A8%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%AB%E7%9A%84%E8%B4%A6%E5%8F%B7%E7%94%B3%E8%AF%B7%E4%B8%8A%E6%9E%B6)/" title="link to app审核中遇到的问题03（涉及到金融类的需要用企业级别的账号申请上架）">app审核中遇到的问题03（涉及到金融类的需要用企业级别的账号申请上架）</a></h2>
+       <p class="excerpt">2017年2月17日 上午2:54发件人 Apple	•	2. 3 PERFORMANCE: ACCURATE METADATA 	•	0. 10.0 BEFORE YOU SUBMIT: PROGRAM LICENSE AGREEMENTPerformance - 2.3.7Your app name to be displayed on the App Store includes keywords or descriptors, which are not appropriate f...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-17 13:56:00 +0800" class="post-list__meta--date date">2017-02-17</time> &#8226; <span class="post-list__meta--tags tags">iOS,AppleStore</span><a class="btn-border-small" href=/2017/02/app%E5%AE%A1%E6%A0%B8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%9803(%E6%B6%89%E5%8F%8A%E5%88%B0%E9%87%91%E8%9E%8D%E7%B1%BB%E7%9A%84%E9%9C%80%E8%A6%81%E7%94%A8%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%AB%E7%9A%84%E8%B4%A6%E5%8F%B7%E7%94%B3%E8%AF%B7%E4%B8%8A%E6%9E%B6)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-02-24 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://www.jianshu.com/users/ec2765510404/latest_articles">@hnxyzhw</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/hnxyzhw">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+  </body>
+
+</html>
